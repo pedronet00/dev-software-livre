@@ -49,21 +49,41 @@ class CommentController extends Controller
    
     public function show(string $id)
     {
-        //
+        
     }
+
+    public function getCommentsByPostId($idPost)
+    {
+        $comments = Comment::where('idPost', $idPost)
+                    ->leftJoin('users', 'comments.idUsuario', '=', 'users.id')
+                    ->select('comments.*', 'users.name as userName')
+                    ->get();
+
+        if ($comments->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => "O post não tem comentários. Seja o primeiro a comentar!"
+            ]);
+        }
+
+        return response()->json($comments, 200);
+    }
+
 
     public function edit(string $id)
     {
         //
     }
-
+    
     public function update(Request $request, string $id)
     {
         //
     }
-
+    
     public function destroy(string $id)
     {
         //
     }
 }
+
+

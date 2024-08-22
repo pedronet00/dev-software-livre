@@ -22,5 +22,5 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 // COMMENTS
-Route::get('/comments', [CommentController::class, 'index']);
+Route::get('/comments/{id}', [CommentController::class, 'getCommentsByPostId']);
 Route::post('/comments', [CommentController::class, 'store']);

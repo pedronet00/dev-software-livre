@@ -41,7 +41,7 @@ function Home() {
                                 <div key={ultimoPost.id} className="card mb-4">
                                     <a href="#!"><img className="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
                                     <div className="card-body">
-                                        <div className="small text-muted">January 1, 2023</div>
+                                        <div className="small text-muted">{new Date(ultimoPost.created_at).toLocaleDateString()}</div>
                                         <h2 className="card-title">{ultimoPost.tituloPost}</h2>
                                         <p className="card-text">{ultimoPost.subtituloPost}</p>
                                         <a className="btn btn-primary" href={`/post/${ultimoPost.id}`}>Leia mais →</a>

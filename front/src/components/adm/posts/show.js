@@ -7,7 +7,6 @@ export default function Post() {
     const [post, setPost] = useState(null);
 
     useEffect(() => {
-        console.log("Id: " + id);
         api
           .get(`/post/${id}`) // Usa o id capturado na URL
           .then((response) => setPost(response.data))
@@ -20,7 +19,6 @@ export default function Post() {
         return <div>Carregando...</div>; // Mostra um indicador de carregamento enquanto o post é carregado
     }
 
-    console.log("Post: " + post);
 
     return(
         <div className="container mt-5">
