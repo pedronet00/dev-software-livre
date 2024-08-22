@@ -18,7 +18,7 @@ export default function Post() {
     if (!post) {
         return <div>Carregando...</div>; // Mostra um indicador de carregamento enquanto o post é carregado
     }
-
+    
 
     return(
         <div className="container mt-5">
@@ -27,7 +27,7 @@ export default function Post() {
                     <article>
                         <header className="mb-4">
                             <h1 className="fw-bolder mb-1">{post.tituloPost}</h1>
-                            <div className="text-muted fst-italic mb-2">Posted on January 1, 2023 by Start Bootstrap</div>
+                            <div className="text-muted fst-italic mb-2">Postado em {new Date(post.created_at).toLocaleDateString()}, por Pedro</div>
                             <a className="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
                             <a className="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
                         </header>
