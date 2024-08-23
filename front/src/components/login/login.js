@@ -19,32 +19,31 @@ export default function Login() {
         api
             .post("/login", userData)
             .then((response) => {
-                // Verificando se a resposta contém a propriedade 'data'
+               
                 if (response && response.data) {
                     const token = response.data.token;
-                    const name = response.data.name; // Certifique-se de que a resposta inclui 'name'
-                    const idUser = response.data.idUser; // Certifique-se de que a resposta inclui 'name'
+                    const name = response.data.name; 
+                    const idUser = response.data.idUser; 
 
-                    // Armazenando o token e o nome no localStorage
+                    
                     localStorage.setItem('auth_token', token);
                     localStorage.setItem('name', name);
                     localStorage.setItem('idUser', idUser)
                     
-                    // Exibindo mensagem de sucesso
+                    
                     Swal.fire({
                         title: "Sucesso!",
                         text: "Logado com sucesso.",
                         icon: "success"
                     });
 
-                    // Redirecionando para o dashboard ou outra página
-                    navigate('/');  // Mude '/dashboard' para a rota desejada
+                    navigate('/');  
 
-                    // Limpando os campos
+                    
                     setEmail('');
                     setPassword('');
                 } else {
-                    // Caso a resposta não tenha a estrutura esperada
+                    
                     Swal.fire({
                         title: "Erro!",
                         text: "Erro ao logar: Resposta inesperada do servidor.",
