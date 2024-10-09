@@ -4,23 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\SessoesTerapia;
+use Exception;
 
-class MusicaController extends Controller
+class SessoesTerapiaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return SessoesTerapia::all();
     }
 
     /**
@@ -28,7 +22,25 @@ class MusicaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+
+            $sessaoTerapia = SessaoTerapia::create([
+                'pacienteId' => $request->pacienteId,
+                'dataSessao' => $request->dataSessao,
+                'notasSessao' => $request->notasSessao,
+                'tecnicasUtilizadasSessao' => $request->tecnicasUtilizadasSessao
+            ]);
+
+        } catch(Exception $e){
+            return response()->json([
+                'error' => $e->getMessage()
+            ],500);
+        }
+
+        return response()->json([
+            'message' => 'Sessão de terapia criada com sucesso!',
+           'sessaoTerapia' => $sessaoTerapia
+        ], 201);
     }
 
     /**

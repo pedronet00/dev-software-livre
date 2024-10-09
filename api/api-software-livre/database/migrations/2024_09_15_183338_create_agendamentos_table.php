@@ -9,17 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-
-     
     public function up(): void
     {
-        Schema::create('musicas', function (Blueprint $table) {
+        Schema::create('agendamentos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('pacienteId');
+            $table->date('dataAgendamento');
+            $table->time('horaAgendamento');
             $table->timestamps();
-            $table->string("tituloMusica");
-            $table->string("albumMusica");
-            $table->integer("duracaoMusica");
-            $table->string("linkMusica");
+
+            // Definindo a chave estrangeira
+            $table->foreign('pacienteId')->references('id')->on('pacientes')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('agendamentos');
     }
 };
