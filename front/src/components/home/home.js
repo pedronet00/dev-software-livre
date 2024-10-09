@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/api";
+import '../../css/home.css';
 
 function Home() {
     // Inicializando `posts` como um array vazio
     const [ultimoPost, setUltimoPost] = useState([]);
     const [posts, setPosts] = useState([]);
+    const [categorias, setCategorias] = useState([]);
+
+
     useEffect(() => {
         api
           .get("/posts")
@@ -24,21 +28,31 @@ function Home() {
           });
     }, []);
 
+
+    useEffect(() => {
+        api
+          .get("/categorias")
+          .then((response) => setCategorias(response.data))
+          .catch((err) => {
+            console.error("ops! ocorreu um erro" + err);
+          });
+    }, []);
+
     return (
-        <div>
+        <div className="bg-dark">
             
-            <header className="py-5 bg-light border-bottom mb-4">
-                <div className="container">
+            <header className="py-5 bg-dark mb-4">
+                <div className="container text-light">
                     <div className="text-center my-5">
                         <h1 className="fw-bolder">Bem vindo ao Blogged!</h1>
                         <p className="lead mb-0">O lugar onde notícias do mundo se juntam!</p>
                     </div>
                 </div>
             </header>
-            <div className="container">
-                <div className="row">
+            <div className="container bg-dark text-light">
+                <div className="row bg-dark">
                     <div className="col-lg-8">
-                                <div key={ultimoPost.id} className="card mb-4">
+                                <div key={ultimoPost.id} className="card mb-4 bg-dark text-light">
                                     <a href="#!"><img className="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
                                     <div className="card-body">
                                         <div className="small text-muted">{new Date(ultimoPost.created_at).toLocaleDateString()}</div>
@@ -50,7 +64,7 @@ function Home() {
                                 <div className="row">
                                     {posts.map((post) => (
                                         <div className="col-lg-6" key={post.id}>
-                                            <div className="card mb-4">
+                                            <div className="card mb-4 bg-dark text-light">
                                                 <a href="#!"><img className="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt={post.tituloPost} /></a>
                                                 <div className="card-body">
                                                     <div className="small text-muted">{new Date(post.created_at).toLocaleDateString()}</div>
@@ -77,7 +91,7 @@ function Home() {
                         </nav>
                     </div>
                     <div className="col-lg-4">
-                        <div className="card mb-4">
+                        <div className="card mb-4 bg-dark text-light ">
                             <div className="card-header">Search</div>
                             <div className="card-body">
                                 <div className="input-group">
@@ -86,28 +100,22 @@ function Home() {
                                 </div>
                             </div>
                         </div>
-                        <div className="card mb-4">
-                            <div className="card-header">Categories</div>
+                        <div className="card mb-4 bg-dark text-light ">
+                            <div className="card-header">Categorias</div>
                             <div className="card-body">
                                 <div className="row">
+                                {categorias.map((categoria) => (
                                     <div className="col-sm-6">
                                         <ul className="list-unstyled mb-0">
-                                            <li><a href="#!">Web Design</a></li>
-                                            <li><a href="#!">HTML</a></li>
-                                            <li><a href="#!">Freebies</a></li>
+                                                <li><a href="#!">{categoria.nomeCategoria}</a></li>
+                                            
                                         </ul>
                                     </div>
-                                    <div className="col-sm-6">
-                                        <ul className="list-unstyled mb-0">
-                                            <li><a href="#!">JavaScript</a></li>
-                                            <li><a href="#!">CSS</a></li>
-                                            <li><a href="#!">Tutorials</a></li>
-                                        </ul>
-                                    </div>
+                                ))}
                                 </div>
                             </div>
                         </div>
-                        <div className="card mb-4">
+                        <div className="card mb-4 bg-dark text-light ">
                             <div className="card-header">Side Widget</div>
                             <div className="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
                         </div>

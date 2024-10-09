@@ -4,24 +4,29 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
 // Componentes
-import CriarPost from './components/adm/posts/create';
 import Home from './components/home/home';
-import ListarPosts from './components/adm/posts/list';
 import Navbar from './components/layout/navbar';
-import Post from './components/adm/posts/show';
-import QuemSomos from './components/quem-somos/quem-somos';
+import { SidebarMenu } from './components/layout/sidebar';
 import Login from './components/login/login';
-import Dashboard from './components/adm/dashboard/dashboard';
-import Comments from './components/adm/posts/comments';
+
+import CadastroPaciente from './components/adm/pacientes/create';
+import { ListandoPacientes } from './components/adm/pacientes/list';
+
+
+
+import CadastroAvaliacao from './components/adm/avaliacoes_psicologicas/create';
+import CadastroSessoes from './components/adm/sessoes/create';
 
 // Estilização
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/home.css';
+import { ListandoAvaliacoes } from './components/adm/avaliacoes_psicologicas/list';
 
 
 
 const Layout = () => (
   <>
+    {/* <SidebarMenu/> */}
     <Navbar />
     <Outlet />
   </>
@@ -37,34 +42,30 @@ const router = createBrowserRouter([
         element: <Home/>  
       },
       {
-        path: '/criarPost',
-        element: <CriarPost />  
+        path: '/cadastroPaciente',
+        element: <CadastroPaciente />  
       },
       {
-        path: '/listarPosts',
-        element: <ListarPosts />  
+        path: '/pacientes',
+        element: <ListandoPacientes />  
       },
       {
-        path: '/post/:id',
-        element: (
-          <>
-            <Post />
-            <Comments/>
-          </>
-        ),  
+        path: '/cadastroAvaliacao',
+        element: <CadastroAvaliacao />  
       },
       {
-        path: '/quem-somos',
-        element: <QuemSomos />  
+        path: '/avaliacoes',
+        element: <ListandoAvaliacoes />  
+      },
+      {
+        path: '/cadastroSessoes',
+        element: <CadastroSessoes />  
       },
       {
         path: '/login',
         element: <Login />  
       },
-      {
-        path: '/dashboard',
-        element: <Dashboard />  
-      },
+      
     ]
   }
 ]);

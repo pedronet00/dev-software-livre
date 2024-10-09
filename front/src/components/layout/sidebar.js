@@ -1,41 +1,43 @@
-export default function Sidebar(){
-
-    return(
-                <div className="col-lg-4">
-                    <div className="card mb-4">
-                        <div className="card-header">Search</div>
-                        <div className="card-body">
-                            <div className="input-group">
-                                <input className="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                                <button className="btn btn-primary" id="button-search" type="button">Go!</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card mb-4">
-                        <div className="card-header">Categories</div>
-                        <div className="card-body">
-                            <div className="row">
-                                <div className="col-sm-6">
-                                    <ul className="list-unstyled mb-0">
-                                        <li><a href="#!">Web Design</a></li>
-                                        <li><a href="#!">HTML</a></li>
-                                        <li><a href="#!">Freebies</a></li>
-                                    </ul>
-                                </div>
-                                <div className="col-sm-6">
-                                    <ul className="list-unstyled mb-0">
-                                        <li><a href="#!">JavaScript</a></li>
-                                        <li><a href="#!">CSS</a></li>
-                                        <li><a href="#!">Tutorials</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card mb-4">
-                        <div className="card-header">Side Widget</div>
-                        <div className="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
-                    </div>
-                </div>
+export function SidebarMenu(){
+    return (
+      <nav id="sidebarMenu" className="collapse d-lg-block sidebar bg-white">
+        <div className="position-sticky">
+          <div className="list-group list-group-flush mx-3 mt-4">
+            <a href="#" className="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+              <i className="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
+            </a>
+            <a href="#" className="list-group-item list-group-item-action py-2 ripple active">
+              <i className="fas fa-chart-area fa-fw me-3"></i><span>Website traffic</span>
+            </a>
+            <a href="#" className="list-group-item list-group-item-action py-2 ripple">
+              <i className="fas fa-lock fa-fw me-3"></i><span>Password</span>
+            </a>
+            <a href="#" className="list-group-item list-group-item-action py-2 ripple">
+              <i className="fas fa-chart-line fa-fw me-3"></i><span>Analytics</span>
+            </a>
+            <a href="#" className="list-group-item list-group-item-action py-2 ripple">
+              <i className="fas fa-chart-pie fa-fw me-3"></i><span>SEO</span>
+            </a>
+            <a href="#" className="list-group-item list-group-item-action py-2 ripple">
+              <i className="fas fa-chart-bar fa-fw me-3"></i><span>Orders</span>
+            </a>
+            <a href="#" className="list-group-item list-group-item-action py-2 ripple">
+              <i className="fas fa-globe fa-fw me-3"></i><span>International</span>
+            </a>
+            <a href="#" className="list-group-item list-group-item-action py-2 ripple">
+              <i className="fas fa-building fa-fw me-3"></i><span>Partners</span>
+            </a>
+            <a href="#" className="list-group-item list-group-item-action py-2 ripple">
+              <i className="fas fa-calendar fa-fw me-3"></i><span>Calendar</span>
+            </a>
+            <a href="#" className="list-group-item list-group-item-action py-2 ripple">
+              <i className="fas fa-users fa-fw me-3"></i><span>Users</span>
+            </a>
+            <a href="#" className="list-group-item list-group-item-action py-2 ripple">
+              <i className="fas fa-money-bill fa-fw me-3"></i><span>Sales</span>
+            </a>
+          </div>
+        </div>
+      </nav>
     );
-}
+  };
