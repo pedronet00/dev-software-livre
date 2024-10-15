@@ -12,7 +12,19 @@ import Login from './components/login/login';
 import CadastroPaciente from './components/adm/pacientes/create';
 import { ListandoPacientes } from './components/adm/pacientes/list';
 
+import PlanoTratamentoForm from './components/adm/plano_tratamento/create';
+import DiagnosticoForm from './components/adm/diagnostico/create';
+import ProblemaIdentificadoForm from './components/adm/problemas_identificados/create';
+import PrescricaoForm from './components/adm/prescricao/create';
+import EncaminhamentoForm from './components/adm/encaminhamento/create';
+import AgendamentoForm from './components/adm/agendamento/create';
 
+import ListandoPlanosTratamento from './components/adm/plano_tratamento/list';
+import ListandoPrescricoes from './components/adm/prescricao/list';
+import ListandoProblemasIdentificados from './components/adm/problemas_identificados/list';
+import ListandoEncaminhamentos from './components/adm/encaminhamento/list';
+import ListandoDiagnosticos from './components/adm/diagnostico/list';
+import ListandoAgendamentos from './components/adm/agendamento/list';
 
 import CadastroAvaliacao from './components/adm/avaliacoes_psicologicas/create';
 import CadastroSessoes from './components/adm/sessoes/create';
@@ -65,9 +77,68 @@ const router = createBrowserRouter([
         path: '/login',
         element: <Login />  
       },
+      // Novas rotas que você pediu
       
+      {
+        path: '/planos-tratamento/create/:id?',  // Formulário de criação e edição
+        element: <PlanoTratamentoForm />  
+      },
+      
+      {
+        path: '/diagnosticos/create/:id?',  // Formulário de criação e edição
+        element: <DiagnosticoForm />  
+      },
+      
+      {
+        path: '/problemas-identificados/create/:id?',  // Formulário de criação e edição
+        element: <ProblemaIdentificadoForm />  
+      },
+      
+      {
+        path: '/prescricoes/create/:id?',  // Formulário de criação e edição
+        element: <PrescricaoForm />  
+      },
+      
+      {
+        path: '/encaminhamentos/create/:id?',  // Formulário de criação e edição
+        element: <EncaminhamentoForm />  
+      },
+      {
+        path: '/agendamentos/create/:id?',  // Formulário de criação e edição
+        element: <AgendamentoForm />  
+      },
+      // Rotas de listagem para cada módulo
+    {
+      path: '/planos-tratamento',
+      element: <ListandoPlanosTratamento />  
+    },
+    {
+      path: '/prescricoes',
+      element: <ListandoPrescricoes />  
+    },
+    {
+      path: '/problemas-identificados',
+      element: <ListandoProblemasIdentificados />  
+    },
+    {
+      path: '/encaminhamentos',
+      element: <ListandoEncaminhamentos />  
+    },
+    {
+      path: '/diagnosticos',
+      element: <ListandoDiagnosticos />  
+    },
+    {
+      path: '/agendamentos',
+      element: <ListandoAgendamentos />  
+    },
+    {
+      path: '/agendamentos/:id?',  // Formulário de criação e edição
+      element: <AgendamentoForm />  
+    },
     ]
-  }
+}
+
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
