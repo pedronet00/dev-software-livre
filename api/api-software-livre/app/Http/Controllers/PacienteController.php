@@ -12,9 +12,11 @@ class PacienteController extends Controller
     
     public function index()
     {
-        //
-
         return Paciente::all();
+    }
+
+    public function pacienteCount(){
+        return Paciente::all()->count();
     }
 
     
@@ -76,17 +78,7 @@ class PacienteController extends Controller
         ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(Request $request, string $id)
     {
         //

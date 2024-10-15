@@ -14,6 +14,7 @@ Route::get('/user', function (Request $request) {
 
 //* PACIENTES
 Route::get('/pacientes', [PacienteController::class, 'index']);
+Route::get('/qtdePacientes', [PacienteController::class, 'pacienteCount']);
 Route::post('/paciente', [PacienteController::class, 'store']);
 Route::get('/paciente/{id}', [PacienteController::class, 'show']);
 Route::delete('/post/{id}', [PacienteController::class, 'destroy']);
