@@ -2,11 +2,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
-
+import { Box } from '@mui/material';
 // Componentes
 import Home from './components/home/home';
 import Navbar from './components/layout/navbar';
-import { SidebarMenu } from './components/layout/sidebar';
+import SidebarMenu from './components/layout/sidebar';
 import Login from './components/login/login';
 
 import CadastroPaciente from './components/adm/pacientes/create';
@@ -38,9 +38,12 @@ import { ListandoAvaliacoes } from './components/adm/avaliacoes_psicologicas/lis
 
 const Layout = () => (
   <>
-    {/* <SidebarMenu/> */}
-    <Navbar />
-    <Outlet />
+    <Box sx={{ display: 'flex' }}>
+                <SidebarMenu />
+                <Box sx={{ marginLeft: 30, flexGrow: 1, padding: '16px' }}>
+                    <Outlet />
+                </Box>
+            </Box>
   </>
 );
 
