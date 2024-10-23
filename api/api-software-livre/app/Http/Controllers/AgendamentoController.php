@@ -17,8 +17,8 @@ class AgendamentoController extends Controller
     {
         $request->validate([
             'paciente_id' => 'required',
-            'data' => 'required|date',
-            'hora' => 'required',
+            // 'data' => 'required|date',
+            // 'hora' => 'required',
         ]);
 
         Agendamento::create($request->all());
