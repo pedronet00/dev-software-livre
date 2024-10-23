@@ -39,7 +39,7 @@ const SidebarMenu = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 paddingTop: '16px',
-                overflowY: 'auto', // Permite rolagem
+                overflowY: 'auto', // Permite rolagem,
             }}
         >
             <Typography variant="h6" sx={{ padding: '16px', textAlign: 'center' }}>Clínica</Typography>
@@ -59,7 +59,7 @@ const SidebarMenu = () => {
                     <ListItemText sx={{color: 'white'}} primary="Avaliações" />
                 </ListItem>
                 <Divider />
-                <ListItem component={Link} to="/sessões">
+                <ListItem component={Link} to="/sessoes">
                     <ListItemText sx={{color: 'white'}} primary="Sessões" />
                 </ListItem>
                 <Divider />

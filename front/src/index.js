@@ -25,6 +25,7 @@ import ListandoProblemasIdentificados from './components/adm/problemas_identific
 import ListandoEncaminhamentos from './components/adm/encaminhamento/list';
 import ListandoDiagnosticos from './components/adm/diagnostico/list';
 import ListandoAgendamentos from './components/adm/agendamento/list';
+import ListandoSessoes from './components/adm/sessoes/list';
 
 import CadastroAvaliacao from './components/adm/avaliacoes_psicologicas/create';
 import CadastroSessoes from './components/adm/sessoes/create';
@@ -72,16 +73,21 @@ const router = createBrowserRouter([
         path: '/avaliacoes',
         element: <ListandoAvaliacoes />  
       },
-      {
-        path: '/cadastroSessoes',
-        element: <CadastroSessoes />  
-      },
+      
       {
         path: '/login',
         element: <Login />  
       },
       // Novas rotas que você pediu
       
+      {
+        path: '/sessoes',  // Formulário de criação e edição
+        element: <ListandoSessoes />  
+      },
+      {
+        path: '/sessoes/create/:id?',  // Formulário de criação e edição
+        element: <CadastroSessoes />  
+      },
       {
         path: '/planos-tratamento/create/:id?',  // Formulário de criação e edição
         element: <PlanoTratamentoForm />  
