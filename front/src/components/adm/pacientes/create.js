@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Container, Button, TextField, Grid, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import api from '../../api/api';
 
 const CadastroPaciente = () => {
   const [paciente, setPaciente] = useState({
-    nomeCompleto: '',
-    dataNascimento: '',
-    endereco: '',
-    telefone: '',
-    email: ''
+    nomePaciente: '',
+    idadePaciente: 0,
+    sexoPaciente: 1,
+    dataNascimentoPaciente: '',
+    telefonePaciente: '',
+    emailPaciente: '',
+    enderecoPaciente: ''
   });
 
   const handleChange = (e) => {
@@ -15,80 +18,144 @@ const CadastroPaciente = () => {
     setPaciente({ ...paciente, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const calcularIdade = (dataNascimento) => {
+    const hoje = new Date();
+    const nascimento = new Date(dataNascimento);
+    const idade = hoje.getFullYear() - nascimento.getFullYear();
+    const mes = hoje.getMonth() - nascimento.getMonth();
+    if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+      return idade - 1;
+    }
+    return idade;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aqui você pode enviar os dados do paciente para uma API ou backend
-    console.log(paciente);
-    alert('Cadastro realizado com sucesso!');
+    // Calcula a idade do paciente
+    const idade = calcularIdade(paciente.dataNascimentoPaciente);
+    const dadosPaciente = {
+      ...paciente,
+      idadePaciente: idade,
+      userId: 1 // Adiciona a idade calculada
+    };
+
+    try {
+      const response = await api.post('/paciente', dadosPaciente);
+      console.log(response.data);
+      alert('Cadastro realizado com sucesso!');
+      // Limpa os campos do formulário após o cadastro
+      setPaciente({
+        nomePaciente: '',
+        idadePaciente: 0,
+        sexoPaciente: 1,
+        dataNascimentoPaciente: '',
+        telefonePaciente: '',
+        emailPaciente: '',
+        enderecoPaciente: ''
+      });
+    } catch (error) {
+      console.error('Erro ao cadastrar paciente:', error);
+      alert('Erro ao realizar cadastro. Tente novamente.');
+    }
   };
 
   return (
-    <Container>
-      <h2 className="mt-5">Cadastro de Paciente</h2>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="nomeCompleto" className="mb-3">
-          <Form.Label>Nome Completo</Form.Label>
-          <Form.Control
-            type="text"
-            name="nomeCompleto"
-            placeholder="Digite o nome completo"
-            value={paciente.nomeCompleto}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+    <Container maxWidth="sm">
+      <Typography variant="h4" component="h2" gutterBottom className="mt-5">
+        Cadastro de Paciente
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <TextField
+              label="Nome Completo"
+              variant="outlined"
+              fullWidth
+              name="nomePaciente"
+              value={paciente.nomePaciente}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
 
-        <Form.Group controlId="dataNascimento" className="mb-3">
-          <Form.Label>Data de Nascimento</Form.Label>
-          <Form.Control
-            type="date"
-            name="dataNascimento"
-            value={paciente.dataNascimento}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+          <Grid item xs={12}>
+            <TextField
+              label="Data de Nascimento"
+              type="date"
+              variant="outlined"
+              fullWidth
+              name="dataNascimentoPaciente"
+              value={paciente.dataNascimentoPaciente}
+              onChange={handleChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              required
+            />
+          </Grid>
 
-        <Form.Group controlId="endereco" className="mb-3">
-          <Form.Label>Endereço Completo</Form.Label>
-          <Form.Control
-            type="text"
-            name="endereco"
-            placeholder="Digite o endereço completo"
-            value={paciente.endereco}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+          <Grid item xs={12}>
+            <TextField
+              label="Endereço Completo"
+              variant="outlined"
+              fullWidth
+              name="enderecoPaciente"
+              value={paciente.enderecoPaciente}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
 
-        <Form.Group controlId="telefone" className="mb-3">
-          <Form.Label>Número de Telefone</Form.Label>
-          <Form.Control
-            type="tel"
-            name="telefone"
-            placeholder="(99) 99999-9999"
-            value={paciente.telefone}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+          <Grid item xs={12}>
+            <TextField
+              label="Número de Telefone"
+              variant="outlined"
+              fullWidth
+              name="telefonePaciente"
+              value={paciente.telefonePaciente}
+              onChange={handleChange}
+              placeholder="(99) 99999-9999"
+              required
+            />
+          </Grid>
 
-        <Form.Group controlId="email" className="mb-3">
-          <Form.Label>Endereço de Email</Form.Label>
-          <Form.Control
-            type="email"
-            name="email"
-            placeholder="Digite o email"
-            value={paciente.email}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+          <Grid item xs={12}>
+            <TextField
+              label="Endereço de Email"
+              type="email"
+              variant="outlined"
+              fullWidth
+              name="emailPaciente"
+              value={paciente.emailPaciente}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
 
-        <Button variant="primary" type="submit">
-          Cadastrar Paciente
-        </Button>
-      </Form>
+          <Grid item xs={12}>
+            <FormControl variant="outlined" fullWidth required>
+              <InputLabel id="sexo-label">Sexo</InputLabel>
+              <Select
+                labelId="sexo-label"
+                name="sexoPaciente"
+                value={paciente.sexoPaciente}
+                onChange={handleChange}
+                label="Sexo"
+              >
+                <MenuItem value={1}>Masculino</MenuItem>
+                <MenuItem value={2}>Feminino</MenuItem>
+                <MenuItem value={3}>Outro</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Button variant="contained" color="primary" type="submit" fullWidth>
+              Cadastrar Paciente
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
     </Container>
   );
 };

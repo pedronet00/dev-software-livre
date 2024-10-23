@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { TextField, Button, Container, Grid, Typography } from '@mui/material';
 import api from '../../api/api';
 
 function AgendamentoForm() {
@@ -31,23 +32,46 @@ function AgendamentoForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input 
-        type="text" 
-        placeholder="Paciente ID" 
-        value={formData.paciente_id} 
-        onChange={(e) => setFormData({ ...formData, paciente_id: e.target.value })} 
-        required 
-      />
-      <input 
-        type="datetime-local" 
-        placeholder="Data e Hora" 
-        value={formData.data_hora} 
-        onChange={(e) => setFormData({ ...formData, data_hora: e.target.value })} 
-        required 
-      />
-      <button type="submit">{id ? 'Atualizar' : 'Criar'} Agendamento</button>
-    </form>
+    <Container maxWidth="sm">
+      <Typography variant="h4" component="h2" gutterBottom>
+        {id ? 'Editar Agendamento' : 'Criar Agendamento'}
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <TextField
+              label="Paciente ID"
+              variant="outlined"
+              fullWidth
+              value={formData.paciente_id}
+              onChange={(e) => setFormData({ ...formData, paciente_id: e.target.value })}
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              label="Data e Hora"
+              type="datetime-local"
+              variant="outlined"
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={formData.data_hora}
+              onChange={(e) => setFormData({ ...formData, data_hora: e.target.value })}
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Button variant="contained" color="primary" type="submit" fullWidth>
+              {id ? 'Atualizar' : 'Criar'} Agendamento
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+    </Container>
   );
 }
 

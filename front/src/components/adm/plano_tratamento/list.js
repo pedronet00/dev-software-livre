@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Container, Typography, Button, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import api from '../../api/api';
 
 function ListandoPlanosTratamento() {
@@ -14,32 +15,42 @@ function ListandoPlanosTratamento() {
   }, []);
 
   return (
-    <div className="container">
-      <h1>Planos de Tratamento</h1>
-      <Link to="/planos-tratamento" className="btn btn-primary mb-3">Criar Novo Plano de Tratamento</Link>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Objetivos</th>
-            <th>Data de Início</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
+    <Container maxWidth="lg">
+      <Typography variant="h4" component="h1" gutterBottom>
+        Planos de Tratamento
+      </Typography>
+      <Link to="/planos-tratamento" style={{ textDecoration: 'none' }}>
+        <Button variant="contained" color="primary" className="mb-3">
+          Criar Novo Plano de Tratamento
+        </Button>
+      </Link>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>ID</TableCell>
+            <TableCell>Objetivos</TableCell>
+            <TableCell>Data de Início</TableCell>
+            <TableCell>Ações</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {planos.map(plano => (
-            <tr key={plano.id}>
-              <td>{plano.id}</td>
-              <td>{plano.objetivos}</td>
-              <td>{new Date(plano.data_inicio).toLocaleDateString()}</td>
-              <td>
-                <Link to={`/planos-tratamento/${plano.id}`} className="btn btn-warning btn-sm">Editar</Link>
-              </td>
-            </tr>
+            <TableRow key={plano.id}>
+              <TableCell>{plano.id}</TableCell>
+              <TableCell>{plano.objetivos_terapeuticos}</TableCell>
+              <TableCell>{new Date(plano.data_inicio).toLocaleDateString()}</TableCell>
+              <TableCell>
+                <Link to={`/planos-tratamento/${plano.id}`} style={{ textDecoration: 'none' }}>
+                  <Button variant="outlined" color="warning" size="small">
+                    Editar
+                  </Button>
+                </Link>
+              </TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
-    </div>
+        </TableBody>
+      </Table>
+    </Container>
   );
 }
 

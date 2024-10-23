@@ -1,8 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api/api'; // Assumindo que o api.js está na pasta api
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  Paper,
+  CircularProgress,
+} from '@mui/material';
 
 export function ListandoPacientes() {
   const [pacientes, setPacientes] = useState([]); // Estado para armazenar a lista de pacientes
+  const [loading, setLoading] = useState(true); // Estado para controle de loading
 
   useEffect(() => {
     // Faz a requisição para o endpoint /pacientes
@@ -12,6 +25,8 @@ export function ListandoPacientes() {
         setPacientes(response.data); // Atualiza o estado com a lista de pacientes
       } catch (error) {
         console.error('Erro ao buscar pacientes:', error);
+      } finally {
+        setLoading(false); // Finaliza o loading independentemente do resultado
       }
     };
 
@@ -23,49 +38,67 @@ export function ListandoPacientes() {
   };
 
   return (
-    <>
+    <Paper style={{ padding: '16px' }}>
+      <Typography variant="h4" component="h2" gutterBottom>
+        Lista de Pacientes
+      </Typography>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleCadastrarPaciente}
+        style={{ marginBottom: '16px' }}
+      >
+        Cadastrar Paciente
+      </Button>
 
-        <button className='btn btn-primary' onClick={handleCadastrarPaciente}>Cadastrar paciente</button>
-        <table className="table align-middle" style={{width: '80%', margin: 'auto'}}>
-            <thead>
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Email</th>
-                <th scope="col">Idade</th>
-                <th scope="col">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {pacientes.length > 0 ? (
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>#</TableCell>
+                <TableCell>Nome</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Idade</TableCell>
+                <TableCell>Ações</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {pacientes.length > 0 ? (
                 pacientes.map((paciente) => (
-                    <tr key={paciente.id}>
-                    <th scope="row">{paciente.id}</th>
-                    <td>{paciente.nomePaciente}</td>
-                    <td>{paciente.emailPaciente}</td>
-                    <td>{paciente.idadePaciente}</td>
-                    <td>
-                        <button
-                        type="button"
-                        className="btn btn-link btn-sm px-3"
-                        data-mdb-ripple-init
-                        data-ripple-color="primary"
-                        >
-                        <i className="fas fa-times"></i>
-                        </button>
-                    </td>
-                    </tr>
+                  <TableRow key={paciente.id}>
+                    <TableCell>{paciente.id}</TableCell>
+                    <TableCell>{paciente.nomePaciente}</TableCell>
+                    <TableCell>{paciente.emailPaciente}</TableCell>
+                    <TableCell>{paciente.idadePaciente}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        size="small"
+                        onClick={() => {
+                          // Aqui você pode implementar a lógica para excluir um paciente
+                          console.log('Excluir paciente:', paciente.id);
+                        }}
+                      >
+                        Excluir
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 ))
-                ) : (
-                <tr>
-                    <td colSpan="4" className="text-center">
-                    Carregando...
-                    </td>
-                </tr>
-                )}
-            </tbody>
-        </table>
-    
-    </>
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={5} align="center">
+                    Nenhum paciente encontrado.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </Paper>
   );
 }

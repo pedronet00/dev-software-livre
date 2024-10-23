@@ -11,3 +11,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* CSS para o layout */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  flex: 0 0 250px; /* Largura fixa para a sidebar */
+  background-color: #f8f9fa;
+  height: 100vh; /* Preenche toda a altura da página */
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+

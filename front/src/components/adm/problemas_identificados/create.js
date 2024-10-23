@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { TextField, Button, Container, Grid, Typography } from '@mui/material';
 import api from '../../api/api';
 
 function ProblemaIdentificadoForm() {
@@ -33,34 +34,71 @@ function ProblemaIdentificadoForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input 
-        type="text" 
-        placeholder="Paciente ID" 
-        value={formData.paciente_id} 
-        onChange={(e) => setFormData({ ...formData, paciente_id: e.target.value })} 
-        required 
-      />
-      <input 
-        type="date" 
-        placeholder="Data" 
-        value={formData.data} 
-        onChange={(e) => setFormData({ ...formData, data: e.target.value })} 
-        required 
-      />
-      <textarea 
-        placeholder="Descrição" 
-        value={formData.descricao} 
-        onChange={(e) => setFormData({ ...formData, descricao: e.target.value })} 
-        required 
-      />
-      <textarea 
-        placeholder="Evolução" 
-        value={formData.evolucao} 
-        onChange={(e) => setFormData({ ...formData, evolucao: e.target.value })} 
-      />
-      <button type="submit">{id ? 'Atualizar' : 'Criar'} Problema Identificado</button>
-    </form>
+    <Container maxWidth="sm">
+      <Typography variant="h4" component="h2" gutterBottom>
+        {id ? 'Editar Problema Identificado' : 'Criar Problema Identificado'}
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <TextField
+              label="Paciente ID"
+              variant="outlined"
+              fullWidth
+              value={formData.paciente_id}
+              onChange={(e) => setFormData({ ...formData, paciente_id: e.target.value })}
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              label="Data"
+              type="date"
+              variant="outlined"
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={formData.data}
+              onChange={(e) => setFormData({ ...formData, data: e.target.value })}
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              label="Descrição"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+              value={formData.descricao}
+              onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              label="Evolução"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+              value={formData.evolucao}
+              onChange={(e) => setFormData({ ...formData, evolucao: e.target.value })}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Button variant="contained" color="primary" type="submit" fullWidth>
+              {id ? 'Atualizar' : 'Criar'} Problema Identificado
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+    </Container>
   );
 }
 

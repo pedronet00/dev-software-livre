@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { TextField, Button, Container, Grid, Typography } from '@mui/material';
 import api from '../../api/api';
 
 function EncaminhamentoForm() {
@@ -33,37 +34,68 @@ function EncaminhamentoForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input 
-        type="text" 
-        placeholder="Paciente ID" 
-        value={formData.paciente_id} 
-        onChange={(e) => setFormData({ ...formData, paciente_id: e.target.value })} 
-        required 
-      />
-      <input 
-        type="date" 
-        placeholder="Data" 
-        value={formData.data} 
-        onChange={(e) => setFormData({ ...formData, data: e.target.value })} 
-        required 
-      />
-      <input 
-        type="text" 
-        placeholder="Motivo" 
-        value={formData.motivo} 
-        onChange={(e) => setFormData({ ...formData, motivo: e.target.value })} 
-        required 
-      />
-      <input 
-        type="text" 
-        placeholder="Profissional" 
-        value={formData.profissional} 
-        onChange={(e) => setFormData({ ...formData, profissional: e.target.value })} 
-        required 
-      />
-      <button type="submit">{id ? 'Atualizar' : 'Criar'} Encaminhamento</button>
-    </form>
+    <Container maxWidth="sm">
+      <Typography variant="h4" component="h2" gutterBottom>
+        {id ? 'Editar Encaminhamento' : 'Criar Encaminhamento'}
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <TextField
+              label="Paciente ID"
+              variant="outlined"
+              fullWidth
+              value={formData.paciente_id}
+              onChange={(e) => setFormData({ ...formData, paciente_id: e.target.value })}
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              label="Data"
+              type="date"
+              variant="outlined"
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={formData.data}
+              onChange={(e) => setFormData({ ...formData, data: e.target.value })}
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              label="Motivo"
+              variant="outlined"
+              fullWidth
+              value={formData.motivo}
+              onChange={(e) => setFormData({ ...formData, motivo: e.target.value })}
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              label="Profissional"
+              variant="outlined"
+              fullWidth
+              value={formData.profissional}
+              onChange={(e) => setFormData({ ...formData, profissional: e.target.value })}
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Button variant="contained" color="primary" type="submit" fullWidth>
+              {id ? 'Atualizar' : 'Criar'} Encaminhamento
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+    </Container>
   );
 }
 

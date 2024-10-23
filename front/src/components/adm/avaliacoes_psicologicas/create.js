@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Container } from 'react-bootstrap';
+import {
+  Container,
+  Button,
+  TextField,
+  Grid,
+  Typography,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+} from '@mui/material';
 import api from '../../api/api'; // Assumindo que o api.js está na pasta api
 
 const CadastroAvaliacao = () => {
   const [avaliacao, setAvaliacao] = useState({
-    paciente: '',
+    pacienteId: '',
     dataAvaliacao: '',
-    observacoes: ''
+    observacoes: '',
+    userId: 1, // Assumindo que você está usando um ID de usuário fixo. Isso pode ser dinâmico conforme sua aplicação.
   });
 
   const [pacientes, setPacientes] = useState([]); // Estado para armazenar a lista de pacientes
@@ -30,66 +41,99 @@ const CadastroAvaliacao = () => {
     setAvaliacao({ ...avaliacao, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aqui você pode enviar os dados da avaliação para uma API ou backend
-    console.log(avaliacao);
-    alert('Avaliação cadastrada com sucesso!');
+    try {
+      // Envia os dados da avaliação para a API
+      const response = await api.post('/avaliacoes', avaliacao);
+      console.log(response.data);
+      alert('Avaliação cadastrada com sucesso!');
+      
+      // Limpa os campos após o envio
+      setAvaliacao({
+        pacienteId: '',
+        dataAvaliacao: '',
+        observacoes: '',
+        userId: 1,
+      });
+    } catch (error) {
+      console.error('Erro ao cadastrar avaliação:', error);
+      alert('Erro ao cadastrar avaliação. Tente novamente.');
+    }
   };
 
   return (
-    <Container>
-      <h2 className="mt-5">Cadastro de Avaliação</h2>
-      <Form onSubmit={handleSubmit}>
-        {/* Select de Pacientes */}
-        <Form.Group controlId="paciente" className="mb-3">
-          <Form.Label>Selecione o Paciente</Form.Label>
-          <Form.Control 
-            as="select" 
-            name="paciente" 
-            value={avaliacao.paciente} 
-            onChange={handleChange} 
-            required
-          >
-            <option value="">Selecione um paciente</option>
-            {/* Populando o select com os pacientes vindos da API */}
-            {pacientes.map((paciente) => (
-              <option key={paciente.id} value={paciente.id}>
-                {paciente.nomePaciente}
-              </option>
-            ))}
-          </Form.Control>
-        </Form.Group>
+    <Container maxWidth="sm">
+      <Typography variant="h4" component="h2" gutterBottom className="mt-5">
+        Cadastro de Avaliação
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={3}>
+          {/* Select de Pacientes */}
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <InputLabel id="paciente-label">Selecione o Paciente</InputLabel>
+              <Select
+                labelId="paciente-label"
+                id="paciente"
+                name="pacienteId"
+                value={avaliacao.pacienteId}
+                onChange={handleChange}
+                required
+                label="Selecione o Paciente"
+              >
+                <MenuItem value="">
+                  <em>Selecione um paciente</em>
+                </MenuItem>
+                {/* Populando o select com os pacientes vindos da API */}
+                {pacientes.map((paciente) => (
+                  <MenuItem key={paciente.id} value={paciente.id}>
+                    {paciente.nomePaciente}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
 
-        {/* Data da Avaliação */}
-        <Form.Group controlId="dataAvaliacao" className="mb-3">
-          <Form.Label>Data da Avaliação</Form.Label>
-          <Form.Control
-            type="date"
-            name="dataAvaliacao"
-            value={avaliacao.dataAvaliacao}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+          {/* Data da Avaliação */}
+          <Grid item xs={12}>
+            <TextField
+              label="Data da Avaliação"
+              type="date"
+              variant="outlined"
+              fullWidth
+              name="dataAvaliacao"
+              value={avaliacao.dataAvaliacao}
+              onChange={handleChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              required
+            />
+          </Grid>
 
-        {/* Observações */}
-        <Form.Group controlId="observacoes" className="mb-3">
-          <Form.Label>Observações</Form.Label>
-          <Form.Control
-            as="textarea"
-            name="observacoes"
-            rows={3}
-            placeholder="Digite as observações sobre a avaliação"
-            value={avaliacao.observacoes}
-            onChange={handleChange}
-          />
-        </Form.Group>
+          {/* Observações */}
+          <Grid item xs={12}>
+            <TextField
+              label="Observações"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+              name="observacoes"
+              value={avaliacao.observacoes}
+              onChange={handleChange}
+              placeholder="Digite as observações sobre a avaliação"
+            />
+          </Grid>
 
-        <Button variant="primary" type="submit">
-          Cadastrar Avaliação
-        </Button>
-      </Form>
+          <Grid item xs={12}>
+            <Button variant="contained" color="primary" type="submit" fullWidth>
+              Cadastrar Avaliação
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
     </Container>
   );
 };
