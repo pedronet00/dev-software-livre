@@ -19,7 +19,7 @@ function ListandoPlanosTratamento() {
       <Typography variant="h4" component="h1" gutterBottom>
         Planos de Tratamento
       </Typography>
-      <Link to="/planos-tratamento" style={{ textDecoration: 'none' }}>
+      <Link to="/planos-tratamento/create" style={{ textDecoration: 'none' }}>
         <Button variant="contained" color="primary" className="mb-3">
           Criar Novo Plano de Tratamento
         </Button>

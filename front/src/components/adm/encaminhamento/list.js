@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Container,
+  Typography,
+  Button,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+} from '@mui/material';
 import api from '../../api/api';
 
 function ListandoEncaminhamentos() {
@@ -14,34 +24,52 @@ function ListandoEncaminhamentos() {
   }, []);
 
   return (
-    <div className="container">
-      <h1>Encaminhamentos</h1>
-      <Link to="/encaminhamentos" className="btn btn-primary mb-3">Criar Novo Encaminhamento</Link>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Motivo</th>
-            <th>Data</th>
-            <th>Profissional</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {encaminhamentos.map(encaminhamento => (
-            <tr key={encaminhamento.id}>
-              <td>{encaminhamento.id}</td>
-              <td>{encaminhamento.motivo}</td>
-              <td>{new Date(encaminhamento.data).toLocaleDateString()}</td>
-              <td>{encaminhamento.profissional}</td>
-              <td>
-                <Link to={`/encaminhamentos/${encaminhamento.id}`} className="btn btn-warning btn-sm">Editar</Link>
-              </td>
-            </tr>
+    <Container>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Encaminhamentos
+      </Typography>
+      <Button 
+        component={Link} 
+        to="/encaminhamentos/create" 
+        variant="contained" 
+        color="primary" 
+        className="mb-3"
+      >
+        Criar Novo Encaminhamento
+      </Button>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>ID</TableCell>
+            <TableCell>Motivo</TableCell>
+            <TableCell>Data</TableCell>
+            <TableCell>Profissional</TableCell>
+            <TableCell>Ações</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {encaminhamentos.map((encaminhamento) => (
+            <TableRow key={encaminhamento.id}>
+              <TableCell>{encaminhamento.id}</TableCell>
+              <TableCell>{encaminhamento.motivo}</TableCell>
+              <TableCell>{new Date(encaminhamento.data).toLocaleDateString()}</TableCell>
+              <TableCell>{encaminhamento.profissional}</TableCell>
+              <TableCell>
+                <Button 
+                  component={Link} 
+                  to={`/encaminhamentos/${encaminhamento.id}`} 
+                  variant="outlined" 
+                  color="warning"
+                  size="small"
+                >
+                  Editar
+                </Button>
+              </TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
-    </div>
+        </TableBody>
+      </Table>
+    </Container>
   );
 }
 

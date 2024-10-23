@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { TextField, Button, Container, Grid, Typography } from '@mui/material';
+import { TextField, Button, Container, Grid, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import api from '../../api/api';
 
 function ProblemaIdentificadoForm() {
@@ -10,10 +10,24 @@ function ProblemaIdentificadoForm() {
     paciente_id: '',
     data: '',
     descricao: '',
-    evolucao: ''
+    evolucao: '',
+    userId: 1
   });
+  const [pacientes, setPacientes] = useState([]); // Estado para armazenar a lista de pacientes
 
   useEffect(() => {
+    // Função para buscar a lista de pacientes
+    const fetchPacientes = async () => {
+      try {
+        const response = await api.get('/pacientes');
+        setPacientes(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar pacientes:', error);
+      }
+    };
+
+    fetchPacientes();
+
     if (id) {
       api.get(`/problema-identificado/${id}`)
         .then((response) => {
@@ -41,14 +55,24 @@ function ProblemaIdentificadoForm() {
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <TextField
-              label="Paciente ID"
-              variant="outlined"
-              fullWidth
-              value={formData.paciente_id}
-              onChange={(e) => setFormData({ ...formData, paciente_id: e.target.value })}
-              required
-            />
+            <FormControl fullWidth required>
+              <InputLabel id="paciente-label">Selecione o Paciente</InputLabel>
+              <Select
+                labelId="paciente-label"
+                value={formData.paciente_id}
+                onChange={(e) => setFormData({ ...formData, paciente_id: e.target.value })}
+                variant="outlined"
+              >
+                <MenuItem value="">
+                  <em>Selecione um paciente</em>
+                </MenuItem>
+                {pacientes.map((paciente) => (
+                  <MenuItem key={paciente.id} value={paciente.id}>
+                    {paciente.nomePaciente}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
 
           <Grid item xs={12}>

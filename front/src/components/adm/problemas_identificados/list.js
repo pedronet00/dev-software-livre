@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Container,
+  Typography,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper
+} from '@mui/material';
 import api from '../../api/api';
 
 function ListandoProblemasIdentificados() {
@@ -14,32 +26,44 @@ function ListandoProblemasIdentificados() {
   }, []);
 
   return (
-    <div className="container">
-      <h1>Problemas Identificados</h1>
-      <Link to="/problemas-identificados" className="btn btn-primary mb-3">Criar Novo Problema</Link>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Descrição</th>
-            <th>Data</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {problemas.map(problema => (
-            <tr key={problema.id}>
-              <td>{problema.id}</td>
-              <td>{problema.descricao}</td>
-              <td>{new Date(problema.data).toLocaleDateString()}</td>
-              <td>
-                <Link to={`/problemas-identificados/${problema.id}`} className="btn btn-warning btn-sm">Editar</Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Container>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Problemas Identificados
+      </Typography>
+      <Link to="/problemas-identificados/create" style={{ textDecoration: 'none' }}>
+        <Button variant="contained" color="primary" className="mb-3">
+          Criar Novo Problema
+        </Button>
+      </Link>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Descrição</TableCell>
+              <TableCell>Data</TableCell>
+              <TableCell>Ações</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {problemas.map(problema => (
+              <TableRow key={problema.id}>
+                <TableCell>{problema.id}</TableCell>
+                <TableCell>{problema.descricao}</TableCell>
+                <TableCell>{new Date(problema.data).toLocaleDateString()}</TableCell>
+                <TableCell>
+                  <Link to={`/problemas-identificados/${problema.id}`} style={{ textDecoration: 'none' }}>
+                    <Button variant="outlined" color="warning">
+                      Editar
+                    </Button>
+                  </Link>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }
 

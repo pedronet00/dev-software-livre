@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Container,
+  Typography,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from '@mui/material';
 import api from '../../api/api';
 
 function ListandoAgendamentos() {
@@ -14,32 +26,52 @@ function ListandoAgendamentos() {
   }, []);
 
   return (
-    <div className="container">
-      <h1>Agendamentos de Sessões</h1>
-      <Link to="/agendamentos" className="btn btn-primary mb-3">Criar Novo Agendamento</Link>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Data</th>
-            <th>Hora</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {agendamentos.map(agendamento => (
-            <tr key={agendamento.id}>
-              <td>{agendamento.id}</td>
-              <td>{new Date(agendamento.data).toLocaleDateString()}</td>
-              <td>{agendamento.hora}</td>
-              <td>
-                <Link to={`/agendamentos/${agendamento.id}`} className="btn btn-warning btn-sm">Editar</Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Container>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Agendamentos de Sessões
+      </Typography>
+      <Button
+        component={Link}
+        to="/agendamentos/create"
+        variant="contained"
+        color="primary"
+        sx={{ mb: 2 }}
+      >
+        Criar Novo Agendamento
+      </Button>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Data</TableCell>
+              <TableCell>Hora</TableCell>
+              <TableCell>Ações</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {agendamentos.map((agendamento) => (
+              <TableRow key={agendamento.id}>
+                <TableCell>{agendamento.id}</TableCell>
+                <TableCell>{new Date(agendamento.data).toLocaleDateString()}</TableCell>
+                <TableCell>{agendamento.hora}</TableCell>
+                <TableCell>
+                  <Button
+                    component={Link}
+                    to={`/agendamentos/${agendamento.id}`}
+                    variant="outlined"
+                    color="warning"
+                    size="small"
+                  >
+                    Editar
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }
 
