@@ -12,7 +12,8 @@ class Diagnostico extends Model
         'paciente_id', 
         'data', 
         'descricao', 
-        'detalhamento'
+        'detalhamento',
+        'userId'
     ];
 
     public function paciente()

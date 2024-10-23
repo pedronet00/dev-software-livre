@@ -12,7 +12,8 @@ class ProblemaIdentificado extends Model
         'paciente_id', 
         'data', 
         'descricao', 
-        'evolucao'
+        'evolucao',
+        'userId'
     ];
 
     public function paciente()

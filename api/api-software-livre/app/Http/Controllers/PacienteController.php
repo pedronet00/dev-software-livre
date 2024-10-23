@@ -32,6 +32,7 @@ class PacienteController extends Controller
                 'telefonePaciente' => $request->telefonePaciente,
                 'emailPaciente' => $request->emailPaciente,
                 'enderecoPaciente' => $request->enderecoPaciente,
+                'userId' => $request->userId
             ]);
             
         } catch(Exception $e){

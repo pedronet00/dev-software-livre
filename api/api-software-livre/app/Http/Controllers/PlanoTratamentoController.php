@@ -19,6 +19,7 @@ class PlanoTratamentoController extends Controller
             'paciente_id' => 'required',
             'data_inicio' => 'required|date',
             'objetivos_terapeuticos' => 'required',
+            'userId' => 'required'
         ]);
 
         PlanoTratamento::create($request->all());

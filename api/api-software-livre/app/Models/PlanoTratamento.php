@@ -13,7 +13,8 @@ class PlanoTratamento extends Model
         'paciente_id', 
         'data_inicio', 
         'objetivos_terapeuticos', 
-        'progresso'
+        'progresso',
+        'userId'
     ];
 
     // Relacionamento com o Paciente

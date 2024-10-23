@@ -11,7 +11,8 @@ class Agendamento extends Model
     protected $fillable = [
         'paciente_id', 
         'data', 
-        'hora'
+        'hora',
+        'userId'
     ];
 
     public function paciente()

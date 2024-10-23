@@ -11,7 +11,8 @@ class Prescricao extends Model
     protected $fillable = [
         'paciente_id', 
         'data', 
-        'descricao'
+        'descricao',
+        'userId'
     ];
 
     public function paciente()

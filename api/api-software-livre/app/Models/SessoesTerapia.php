@@ -13,6 +13,7 @@ class SessoesTerapia extends Model
         "pacienteId",
         "dataSessao",
         "notasSessao",
-        "tecnicasUtilizadasSessao"
+        "tecnicasUtilizadasSessao",
+        'userId'
     ];
 }

@@ -12,7 +12,8 @@ class Encaminhamento extends Model
         'paciente_id', 
         'data', 
         'motivo', 
-        'profissional_nome'
+        'profissional_nome',
+        'userId'
     ];
 
     public function paciente()

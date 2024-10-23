@@ -17,6 +17,7 @@ class Paciente extends Model
         'emailPaciente',
         'dataNascimentoPaciente',
         'enderecoPaciente',
+        'userId'
     ];
 
     public function avaliacoes()

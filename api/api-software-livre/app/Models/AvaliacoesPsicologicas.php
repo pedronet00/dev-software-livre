@@ -12,7 +12,8 @@ class AvaliacoesPsicologicas extends Model
     protected $fillable = [
         'pacienteId',
         'dataAvaliacao',
-        'observacoes'
+        'observacoes',
+        'userId'
     ];
 
     public function paciente()

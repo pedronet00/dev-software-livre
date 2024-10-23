@@ -29,7 +29,8 @@ class AvaliacoesPsicologicasController extends Controller
             $avaliacao = AvaliacoesPsicologicas::create([
                 'pacienteId' => $validatedData['pacienteId'],
                 'dataAvaliacao' => $validatedData['dataAvaliacao'],
-                'observacoes' => $validatedData['observacoes']
+                'observacoes' => $validatedData['observacoes'],
+                'userId' => $request->userId
             ]);
 
             return response()->json([
