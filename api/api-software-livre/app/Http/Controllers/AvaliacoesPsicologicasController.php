@@ -11,7 +11,7 @@ class AvaliacoesPsicologicasController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         return AvaliacoesPsicologicas::with('paciente:id,nomePaciente')->where('userId', $request->idUser)->get();
     }

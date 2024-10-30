@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class PrescricaoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $prescricoes = Prescricao::where('userId', $request->idUser)->get();
         return $prescricoes;

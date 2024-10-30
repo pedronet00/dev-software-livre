@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class DiagnosticoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $diagnosticos = Diagnostico::where('userId', $request->idUser)->get();
         return $diagnosticos;

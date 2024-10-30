@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class PlanoTratamentoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $planos = PlanoTratamento::where('userId', $request->idUser)->get();
         return $planos;
