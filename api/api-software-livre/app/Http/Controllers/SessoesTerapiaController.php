@@ -28,7 +28,8 @@ class SessoesTerapiaController extends Controller
                 'pacienteId' => $request->pacienteId,
                 'dataSessao' => $request->dataSessao,
                 'notasSessao' => $request->notasSessao,
-                'tecnicasUtilizadasSessao' => $request->tecnicasUtilizadasSessao
+                'tecnicasUtilizadasSessao' => $request->tecnicasUtilizadasSessao,
+                'userId' => $request->userId
             ]);
 
         } catch(Exception $e){

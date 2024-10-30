@@ -7,7 +7,8 @@ const CadastroSessoes = () => {
     paciente: '',
     dataSessao: '',
     notas: '',
-    tecnicasUtilizadas: ''
+    tecnicasUtilizadas: '',
+    userId: 1 // ID do usuário logado, pode ser dinâmico dependendo da aplicação
   });
 
   const [pacientes, setPacientes] = useState([]); // Estado para armazenar a lista de pacientes
@@ -31,11 +32,31 @@ const CadastroSessoes = () => {
     setSessao({ ...sessao, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aqui você pode enviar os dados da sessão para uma API ou backend
-    console.log(sessao);
-    alert('Sessão cadastrada com sucesso!');
+    try {
+      // Faz a requisição POST para o endpoint /sessoes
+      const response = await api.post('/sessoes', {
+        pacienteId: sessao.paciente,
+        dataSessao: sessao.dataSessao,
+        notasSessao: sessao.notas,
+        tecnicasUtilizadasSessao: sessao.tecnicasUtilizadas,
+        userId: sessao.userId,
+      });
+      console.log('Sessão cadastrada com sucesso:', response.data);
+      alert('Sessão cadastrada com sucesso!');
+      // Limpar os campos após a inserção bem-sucedida
+      setSessao({
+        paciente: '',
+        dataSessao: '',
+        notas: '',
+        tecnicasUtilizadas: '',
+        userId: 1
+      });
+    } catch (error) {
+      console.error('Erro ao cadastrar sessão:', error);
+      alert('Erro ao cadastrar a sessão. Tente novamente.');
+    }
   };
 
   return (

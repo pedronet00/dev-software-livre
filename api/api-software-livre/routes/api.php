@@ -13,6 +13,7 @@ use App\Http\Controllers\ProblemaIdentificadoController;
 use App\Http\Controllers\PrescricaoController;
 use App\Http\Controllers\EncaminhamentoController;
 use App\Http\Controllers\AgendamentoController;
+use App\Http\Controllers\SessoesTerapiaController;
 
 //* ROTA USER (com autenticação sanctum)
 Route::get('/user', function (Request $request) {
@@ -60,3 +61,8 @@ Route::post('/encaminhamento', [EncaminhamentoController::class, 'store']);
 //* AGENDAMENTOS
 Route::get('/agendamentos', [AgendamentoController::class, 'index']);
 Route::post('/agendamento', [AgendamentoController::class, 'store']);
+
+
+//* AGENDAMENTOS
+Route::get('/sessoes', [SessoesTerapiaController::class, 'index']);
+Route::post('/sessoes', [SessoesTerapiaController::class, 'store']);
