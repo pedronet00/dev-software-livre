@@ -9,7 +9,7 @@ class AgendamentoController extends Controller
 {
     public function index()
     {
-        $agendamentos = Agendamento::all();
+        $agendamentos = Agendamento::with('paciente')->get();
         return $agendamentos;
     }
 

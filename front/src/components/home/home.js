@@ -10,6 +10,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+import dayjs from "dayjs";
 
 function Home() {
   const [stats, setStats] = useState({
@@ -19,6 +20,15 @@ function Home() {
   });
 
   const [qtdePacientes, setQtdePacientes] = useState(0);
+  const [agendamentosHoje, setAgendamentosHoje] = useState([]);
+  const [consultas, setConsultas] = useState([
+    { id: 1, paciente: "João Silva", horario: "10:00 AM", profissional: "Dra. Maria" },
+    { id: 2, paciente: "Ana Souza", horario: "11:30 AM", profissional: "Dr. Carlos" },
+  ]);
+  const [categorias, setCategorias] = useState([
+    { id: 1, nomeCategoria: "Ansiedade" },
+    { id: 2, nomeCategoria: "Depressão" },
+  ]);
 
   useEffect(() => {
     api
@@ -27,17 +37,21 @@ function Home() {
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
+
+    // Consulta para buscar agendamentos do dia atual
+    api
+      .get("http://127.0.0.1:8000/api/agendamentos")
+      .then((response) => {
+        const today = dayjs().format("YYYY-MM-DD");
+        const agendamentosHoje = response.data.filter((agendamento) =>
+          dayjs(agendamento.data).isSame(today, "day")
+        );
+        setAgendamentosHoje(agendamentosHoje);
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar agendamentos: " + err);
+      });
   }, []);
-
-  const [consultas, setConsultas] = useState([
-    { id: 1, paciente: "João Silva", horario: "10:00 AM", profissional: "Dra. Maria" },
-    { id: 2, paciente: "Ana Souza", horario: "11:30 AM", profissional: "Dr. Carlos" },
-  ]);
-
-  const [categorias, setCategorias] = useState([
-    { id: 1, nomeCategoria: "Ansiedade" },
-    { id: 2, nomeCategoria: "Depressão" },
-  ]);
 
   return (
     <Container maxWidth="lg" className="bg-light">
@@ -78,20 +92,24 @@ function Home() {
             </Grid>
           </Grid>
 
-          {/* Próximas Consultas */}
+          {/* Agendamentos de Hoje */}
           <Paper elevation={2} sx={{ marginTop: 4 }}>
             <Typography variant="h6" sx={{ padding: 2, backgroundColor: "primary.main", color: "white" }}>
-              Próximas Consultas
+              Agendamentos de Hoje
             </Typography>
             <CardContent>
-              {consultas.map((consulta) => (
-                <div key={consulta.id} className="mb-3">
-                  <Typography><strong>Paciente:</strong> {consulta.paciente}</Typography>
-                  <Typography><strong>Horário:</strong> {consulta.horario}</Typography>
-                  <Typography><strong>Profissional:</strong> {consulta.profissional}</Typography>
-                  <hr />
-                </div>
-              ))}
+              {agendamentosHoje.length > 0 ? (
+                agendamentosHoje.map((agendamento) => (
+                  <div key={agendamento.id} className="mb-3">
+                    <Typography><strong>Paciente:</strong> {agendamento.paciente.nomePaciente}</Typography>
+                    <Typography><strong>Data:</strong> {agendamento.data}</Typography>
+                    <Typography><strong>Hora:</strong> {agendamento.hora}</Typography>
+                    <hr />
+                  </div>
+                ))
+              ) : (
+                <Typography>Nenhum agendamento para hoje</Typography>
+              )}
             </CardContent>
           </Paper>
         </Grid>
