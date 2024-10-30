@@ -16,17 +16,18 @@ import api from '../../api/api';
 function PrescricaoForm() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const idUser = localStorage.getItem('idUser');
   const [formData, setFormData] = useState({
     paciente_id: '',
     data: '',
     descricao: '',
-    userId: 1 // Define o userId como 1
+    userId: idUser 
   });
   const [pacientes, setPacientes] = useState([]);
 
   useEffect(() => {
     const fetchPacientes = async () => {
-      const response = await api.get('/pacientes');
+      const response = await api.get(`/pacientes?idUser=${idUser}`);
       setPacientes(response.data);
     };
     fetchPacientes();

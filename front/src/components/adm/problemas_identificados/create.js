@@ -6,12 +6,13 @@ import api from '../../api/api';
 function ProblemaIdentificadoForm() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const idUser = localStorage.getItem('idUser');
   const [formData, setFormData] = useState({
     paciente_id: '',
     data: '',
     descricao: '',
     evolucao: '',
-    userId: 1
+    userId: idUser
   });
   const [pacientes, setPacientes] = useState([]); // Estado para armazenar a lista de pacientes
 
@@ -19,7 +20,7 @@ function ProblemaIdentificadoForm() {
     // Função para buscar a lista de pacientes
     const fetchPacientes = async () => {
       try {
-        const response = await api.get('/pacientes');
+        const response = await api.get(`/pacientes?idUser=${idUser}`);
         setPacientes(response.data);
       } catch (error) {
         console.error('Erro ao buscar pacientes:', error);

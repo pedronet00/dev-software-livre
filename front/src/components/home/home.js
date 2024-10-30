@@ -130,7 +130,6 @@ function Home() {
               Anotações pessoais
             </Typography>
             <TextField
-              label="Digite suas anotações"
               variant="outlined"
               fullWidth
               multiline

@@ -13,11 +13,12 @@ import {
 import api from '../../api/api'; // Assumindo que o api.js está na pasta api
 
 const CadastroAvaliacao = () => {
+  const idUser = localStorage.getItem('idUser');
   const [avaliacao, setAvaliacao] = useState({
     pacienteId: '',
     dataAvaliacao: '',
     observacoes: '',
-    userId: 1, // Assumindo que você está usando um ID de usuário fixo. Isso pode ser dinâmico conforme sua aplicação.
+    userId: idUser, // Assumindo que você está usando um ID de usuário fixo. Isso pode ser dinâmico conforme sua aplicação.
   });
 
   const [pacientes, setPacientes] = useState([]); // Estado para armazenar a lista de pacientes
@@ -26,7 +27,7 @@ const CadastroAvaliacao = () => {
     // Faz a requisição para o endpoint /pacientes
     const fetchPacientes = async () => {
       try {
-        const response = await api.get('/pacientes');
+        const response = await api.get(`/pacientes?idUser=${idUser}`);
         setPacientes(response.data); // Atualiza o estado com a lista de pacientes
       } catch (error) {
         console.error('Erro ao buscar pacientes:', error);
@@ -54,7 +55,7 @@ const CadastroAvaliacao = () => {
         pacienteId: '',
         dataAvaliacao: '',
         observacoes: '',
-        userId: 1,
+        userId: idUser,
       });
     } catch (error) {
       console.error('Erro ao cadastrar avaliação:', error);
