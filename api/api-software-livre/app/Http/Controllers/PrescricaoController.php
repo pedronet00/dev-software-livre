@@ -9,7 +9,7 @@ class PrescricaoController extends Controller
 {
     public function index()
     {
-        $prescricoes = Prescricao::all();
+        $prescricoes = Prescricao::where('userId', $request->idUser)->get();
         return $prescricoes;
     }
 

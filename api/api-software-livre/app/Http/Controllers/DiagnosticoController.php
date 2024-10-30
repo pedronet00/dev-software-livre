@@ -9,7 +9,7 @@ class DiagnosticoController extends Controller
 {
     public function index()
     {
-        $diagnosticos = Diagnostico::all();
+        $diagnosticos = Diagnostico::where('userId', $request->idUser)->get();
         return $diagnosticos;
     }
 

@@ -10,13 +10,13 @@ use Exception;
 class PacienteController extends Controller
 {
     
-    public function index()
+    public function index(Request $request)
     {
-        return Paciente::all();
+        return Paciente::where('userId', $request->idUser)->get();
     }
 
-    public function pacienteCount(){
-        return Paciente::all()->count();
+    public function pacienteCount(Request $request){
+        return Paciente::where('userId', $request->idUser)->count();
     }
 
     

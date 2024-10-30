@@ -9,7 +9,7 @@ class EncaminhamentoController extends Controller
 {
     public function index()
     {
-        $encaminhamentos = Encaminhamento::all();
+        $encaminhamentos = Encaminhamento::where('userId', $request->idUser)->get();
         return $encaminhamentos;
     }
 

@@ -14,7 +14,7 @@ class SessoesTerapiaController extends Controller
      */
     public function index()
     {
-        return SessoesTerapia::all();
+        return SessoesTerapia::where('userId', $request->idUser)->get();;
     }
 
     /**

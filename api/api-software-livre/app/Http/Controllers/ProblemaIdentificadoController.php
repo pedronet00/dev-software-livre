@@ -9,7 +9,7 @@ class ProblemaIdentificadoController extends Controller
 {
     public function index()
     {
-        $problemas = ProblemaIdentificado::all();
+        $problemas = ProblemaIdentificado::where('userId', $request->idUser)->get();
         return $problemas;
     }
 

@@ -9,7 +9,7 @@ class PlanoTratamentoController extends Controller
 {
     public function index()
     {
-        $planos = PlanoTratamento::all();
+        $planos = PlanoTratamento::where('userId', $request->idUser)->get();
         return $planos;
     }
 

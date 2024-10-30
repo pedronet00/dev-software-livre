@@ -13,7 +13,7 @@ class AvaliacoesPsicologicasController extends Controller
      */
     public function index()
     {
-        return AvaliacoesPsicologicas::with('paciente:id,nomePaciente')->get();
+        return AvaliacoesPsicologicas::with('paciente:id,nomePaciente')->where('userId', $request->idUser)->get();
     }
     
 
