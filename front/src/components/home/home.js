@@ -19,6 +19,8 @@ function Home() {
     profissionaisAtivos: 8,
   });
 
+  
+
   const [qtdePacientes, setQtdePacientes] = useState(0);
   const [agendamentosHoje, setAgendamentosHoje] = useState([]);
   const [consultas, setConsultas] = useState([

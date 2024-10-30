@@ -8,6 +8,7 @@ import Home from './components/home/home';
 import Navbar from './components/layout/navbar';
 import SidebarMenu from './components/layout/sidebar';
 import Login from './components/login/login';
+import PrivateRoute from '../src/components/login/privateRoute';
 
 import CadastroPaciente from './components/adm/pacientes/create';
 import { ListandoPacientes } from './components/adm/pacientes/list';
@@ -40,113 +41,120 @@ import { ListandoAvaliacoes } from './components/adm/avaliacoes_psicologicas/lis
 const Layout = () => (
   <>
     <Box sx={{ display: 'flex' }}>
-                <SidebarMenu />
-                <Box sx={{ marginLeft: 30, flexGrow: 1, padding: '16px' }}>
-                    <Outlet />
-                </Box>
-            </Box>
+      <SidebarMenu />
+        <Box sx={{ marginLeft: 30, flexGrow: 1, padding: '16px' }}>
+          <Outlet />
+        </Box>
+    </Box>
   </>
 );
 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout />,  
-    children: [
+{
+  path: '/',
+  element: <PrivateRoute/>,
+  children: [
+    {
+      path: '/',
+      element: <Layout />,  
+      children: [
+        {
+          path: '/',
+          element: <Home/>  
+        },
+        {
+          path: '/cadastroPaciente',
+          element: <CadastroPaciente />  
+        },
+        {
+          path: '/pacientes',
+          element: <ListandoPacientes />  
+        },
+        {
+          path: '/cadastroAvaliacao',
+          element: <CadastroAvaliacao />  
+        },
+        {
+          path: '/avaliacoes',
+          element: <ListandoAvaliacoes />  
+        },
+        
+        
+        // Novas rotas que você pediu
+        
+        {
+          path: '/sessoes',  // Formulário de criação e edição
+          element: <ListandoSessoes />  
+        },
+        {
+          path: '/sessoes/create/:id?',  // Formulário de criação e edição
+          element: <CadastroSessoes />  
+        },
+        {
+          path: '/planos-tratamento/create/:id?',  // Formulário de criação e edição
+          element: <PlanoTratamentoForm />  
+        },
+        
+        {
+          path: '/diagnosticos/create/:id?',  // Formulário de criação e edição
+          element: <DiagnosticoForm />  
+        },
+        
+        {
+          path: '/problemas-identificados/create/:id?',  // Formulário de criação e edição
+          element: <ProblemaIdentificadoForm />  
+        },
+        
+        {
+          path: '/prescricoes/create/:id?',  // Formulário de criação e edição
+          element: <PrescricaoForm />  
+        },
+        
+        {
+          path: '/encaminhamentos/create/:id?',  // Formulário de criação e edição
+          element: <EncaminhamentoForm />  
+        },
+        {
+          path: '/agendamentos/create/:id?',  // Formulário de criação e edição
+          element: <AgendamentoForm />  
+        },
+        // Rotas de listagem para cada módulo
       {
-        path: '/',
-        element: <Home/>  
+        path: '/planos-tratamento',
+        element: <ListandoPlanosTratamento />  
       },
       {
-        path: '/cadastroPaciente',
-        element: <CadastroPaciente />  
+        path: '/prescricoes',
+        element: <ListandoPrescricoes />  
       },
       {
-        path: '/pacientes',
-        element: <ListandoPacientes />  
+        path: '/problemas-identificados',
+        element: <ListandoProblemasIdentificados />  
       },
       {
-        path: '/cadastroAvaliacao',
-        element: <CadastroAvaliacao />  
+        path: '/encaminhamentos',
+        element: <ListandoEncaminhamentos />  
       },
       {
-        path: '/avaliacoes',
-        element: <ListandoAvaliacoes />  
-      },
-      
-      {
-        path: '/login',
-        element: <Login />  
-      },
-      // Novas rotas que você pediu
-      
-      {
-        path: '/sessoes',  // Formulário de criação e edição
-        element: <ListandoSessoes />  
+        path: '/diagnosticos',
+        element: <ListandoDiagnosticos />  
       },
       {
-        path: '/sessoes/create/:id?',  // Formulário de criação e edição
-        element: <CadastroSessoes />  
+        path: '/agendamentos',
+        element: <ListandoAgendamentos />  
       },
       {
-        path: '/planos-tratamento/create/:id?',  // Formulário de criação e edição
-        element: <PlanoTratamentoForm />  
-      },
-      
-      {
-        path: '/diagnosticos/create/:id?',  // Formulário de criação e edição
-        element: <DiagnosticoForm />  
-      },
-      
-      {
-        path: '/problemas-identificados/create/:id?',  // Formulário de criação e edição
-        element: <ProblemaIdentificadoForm />  
-      },
-      
-      {
-        path: '/prescricoes/create/:id?',  // Formulário de criação e edição
-        element: <PrescricaoForm />  
-      },
-      
-      {
-        path: '/encaminhamentos/create/:id?',  // Formulário de criação e edição
-        element: <EncaminhamentoForm />  
-      },
-      {
-        path: '/agendamentos/create/:id?',  // Formulário de criação e edição
+        path: '/agendamentos/:id?',  // Formulário de criação e edição
         element: <AgendamentoForm />  
       },
-      // Rotas de listagem para cada módulo
-    {
-      path: '/planos-tratamento',
-      element: <ListandoPlanosTratamento />  
-    },
-    {
-      path: '/prescricoes',
-      element: <ListandoPrescricoes />  
-    },
-    {
-      path: '/problemas-identificados',
-      element: <ListandoProblemasIdentificados />  
-    },
-    {
-      path: '/encaminhamentos',
-      element: <ListandoEncaminhamentos />  
-    },
-    {
-      path: '/diagnosticos',
-      element: <ListandoDiagnosticos />  
-    },
-    {
-      path: '/agendamentos',
-      element: <ListandoAgendamentos />  
-    },
-    {
-      path: '/agendamentos/:id?',  // Formulário de criação e edição
-      element: <AgendamentoForm />  
-    },
-    ]
-}
+      ]
+    }
+  ]
+},
+  {
+    path: '/login',
+    element: <Login/>
+  }
 
 ]);
 
