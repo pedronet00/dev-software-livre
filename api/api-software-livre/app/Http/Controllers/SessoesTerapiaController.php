@@ -12,9 +12,9 @@ class SessoesTerapiaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return SessoesTerapia::all();
+        return SessoesTerapia::where('userId', $request->idUser)->get();;
     }
 
     /**

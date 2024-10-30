@@ -14,12 +14,13 @@ function DiagnosticoForm() {
     userId: 1
   });
   const [pacientes, setPacientes] = useState([]); // Estado para armazenar a lista de pacientes
+  const idUser = localStorage.getItem('idUser');
 
   useEffect(() => {
     // Buscar a lista de pacientes
     const fetchPacientes = async () => {
       try {
-        const response = await api.get('/pacientes');
+        const response = await api.get(`/pacientes?idUser=${idUser}`);
         setPacientes(response.data);
       } catch (error) {
         console.error('Erro ao buscar pacientes:', error);

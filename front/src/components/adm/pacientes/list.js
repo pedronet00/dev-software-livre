@@ -16,12 +16,13 @@ import {
 export function ListandoPacientes() {
   const [pacientes, setPacientes] = useState([]); // Estado para armazenar a lista de pacientes
   const [loading, setLoading] = useState(true); // Estado para controle de loading
+  const idUser = localStorage.getItem('idUser');
 
   useEffect(() => {
     // Faz a requisição para o endpoint /pacientes
     const fetchPacientes = async () => {
       try {
-        const response = await api.get('/pacientes');
+        const response = await api.get(`/pacientes?idUser=${idUser}`);
         setPacientes(response.data); // Atualiza o estado com a lista de pacientes
       } catch (error) {
         console.error('Erro ao buscar pacientes:', error);
@@ -58,7 +59,6 @@ export function ListandoPacientes() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>#</TableCell>
                 <TableCell>Nome</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Idade</TableCell>
@@ -69,7 +69,6 @@ export function ListandoPacientes() {
               {pacientes.length > 0 ? (
                 pacientes.map((paciente) => (
                   <TableRow key={paciente.id}>
-                    <TableCell>{paciente.id}</TableCell>
                     <TableCell>{paciente.nomePaciente}</TableCell>
                     <TableCell>{paciente.emailPaciente}</TableCell>
                     <TableCell>{paciente.idadePaciente}</TableCell>

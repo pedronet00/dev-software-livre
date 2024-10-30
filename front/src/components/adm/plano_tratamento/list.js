@@ -5,10 +5,11 @@ import api from '../../api/api';
 
 function ListandoPlanosTratamento() {
   const [planos, setPlanos] = useState([]);
+  const idUser = localStorage.getItem('idUser');
 
   useEffect(() => {
     const fetchPlanos = async () => {
-      const response = await api.get('/planos-tratamento');
+      const response = await api.get(`/planos-tratamento?idUser=${idUser}`);
       setPlanos(response.data);
     };
     fetchPlanos();

@@ -16,18 +16,19 @@ import api from '../../api/api';
 function EncaminhamentoForm() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const idUser = localStorage.getItem('idUser');
   const [formData, setFormData] = useState({
     paciente_id: '',
     data: '',
     motivo: '',
     profissional_nome: '',
-    userId: 1 // Adiciona o userId fixo como 1
+    userId: idUser // Adiciona o userId fixo como 1
   });
   const [pacientes, setPacientes] = useState([]);
 
   useEffect(() => {
     const fetchPacientes = async () => {
-      const response = await api.get('/pacientes');
+      const response = await api.get(`/pacientes?idUser=${idUser}`);
       setPacientes(response.data);
     };
     fetchPacientes();

@@ -8,8 +8,9 @@ import {
   Card,
   CardContent,
   TextField,
-  Button,
 } from "@mui/material";
+import dayjs from "dayjs";
+import PacientesPorCategoria from './pacientesPorCategoria';
 
 function Home() {
   const [stats, setStats] = useState({
@@ -18,26 +19,49 @@ function Home() {
     profissionaisAtivos: 8,
   });
 
+  const idUser = localStorage.getItem('idUser');
   const [qtdePacientes, setQtdePacientes] = useState(0);
-
-  useEffect(() => {
-    api
-      .get("/qtdePacientes")
-      .then((response) => setQtdePacientes(response.data))
-      .catch((err) => {
-        console.error("ops! ocorreu um erro" + err);
-      });
-  }, []);
-
+  const [agendamentosHoje, setAgendamentosHoje] = useState([]);
   const [consultas, setConsultas] = useState([
     { id: 1, paciente: "João Silva", horario: "10:00 AM", profissional: "Dra. Maria" },
     { id: 2, paciente: "Ana Souza", horario: "11:30 AM", profissional: "Dr. Carlos" },
   ]);
-
   const [categorias, setCategorias] = useState([
     { id: 1, nomeCategoria: "Ansiedade" },
     { id: 2, nomeCategoria: "Depressão" },
   ]);
+
+  // Campo de anotações
+  const [anotacoes, setAnotacoes] = useState(localStorage.getItem('anotacoes') || '');
+
+  useEffect(() => {
+    api
+      .get(`/qtdePacientes?idUser=${idUser}`)
+      .then((response) => setQtdePacientes(response.data))
+      .catch((err) => {
+        console.error("ops! ocorreu um erro" + err);
+      });
+
+    api
+      .get(`/agendamentos?idUser=${idUser}`)
+      .then((response) => {
+        const today = dayjs().format("YYYY-MM-DD");
+        const agendamentosHoje = response.data.filter((agendamento) =>
+          dayjs(agendamento.data).isSame(today, "day")
+        );
+        setAgendamentosHoje(agendamentosHoje);
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar agendamentos: " + err);
+      });
+  }, []);
+
+  // Atualiza e salva as anotações no localStorage automaticamente
+  const handleAnotacoesChange = (e) => {
+    const newAnotacoes = e.target.value;
+    setAnotacoes(newAnotacoes);
+    localStorage.setItem('anotacoes', newAnotacoes);
+  };
 
   return (
     <Container maxWidth="lg" className="bg-light">
@@ -50,10 +74,10 @@ function Home() {
 
       <Grid container spacing={4} sx={{ marginTop: 4 }}>
         {/* Estatísticas rápidas */}
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={12}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4}>
-              <Card sx={{ backgroundColor: "info.main", color: "white" }}>
+              <Card sx={{ backgroundColor: "#333333", color: "white" }}>
                 <CardContent>
                   <Typography variant="h5">{qtdePacientes}</Typography>
                   <Typography>Total de Pacientes</Typography>
@@ -61,7 +85,7 @@ function Home() {
               </Card>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Card sx={{ backgroundColor: "warning.main", color: "white" }}>
+              <Card sx={{ backgroundColor: "#333333", color: "white" }}>
                 <CardContent>
                   <Typography variant="h5">{stats.consultasHoje}</Typography>
                   <Typography>Consultas Hoje</Typography>
@@ -69,7 +93,7 @@ function Home() {
               </Card>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Card sx={{ backgroundColor: "success.main", color: "white" }}>
+              <Card sx={{ backgroundColor: "#333333", color: "white" }}>
                 <CardContent>
                   <Typography variant="h5">{stats.profissionaisAtivos}</Typography>
                   <Typography>Profissionais Ativos</Typography>
@@ -78,71 +102,53 @@ function Home() {
             </Grid>
           </Grid>
 
-          {/* Próximas Consultas */}
+          {/* Agendamentos de Hoje */}
           <Paper elevation={2} sx={{ marginTop: 4 }}>
-            <Typography variant="h6" sx={{ padding: 2, backgroundColor: "primary.main", color: "white" }}>
-              Próximas Consultas
+            <Typography variant="h6" sx={{ padding: 2, backgroundColor: "#333333", color: "white" }}>
+              Agendamentos de Hoje
             </Typography>
             <CardContent>
-              {consultas.map((consulta) => (
-                <div key={consulta.id} className="mb-3">
-                  <Typography><strong>Paciente:</strong> {consulta.paciente}</Typography>
-                  <Typography><strong>Horário:</strong> {consulta.horario}</Typography>
-                  <Typography><strong>Profissional:</strong> {consulta.profissional}</Typography>
-                  <hr />
-                </div>
-              ))}
+              {agendamentosHoje.length > 0 ? (
+                agendamentosHoje.map((agendamento) => (
+                  <div key={agendamento.id} className="mb-3">
+                    <Typography><strong>Paciente:</strong> {agendamento.paciente.nomePaciente}</Typography>
+                    <Typography><strong>Data:</strong> {agendamento.data}</Typography>
+                    <Typography><strong>Hora:</strong> {agendamento.hora}</Typography>
+                    <hr />
+                  </div>
+                ))
+              ) : (
+                <Typography>Nenhum agendamento para hoje</Typography>
+              )}
             </CardContent>
           </Paper>
         </Grid>
-
-        {/* Sidebar */}
-        <Grid item xs={12} md={4}>
-          {/* Busca */}
-          <Paper elevation={2} sx={{ marginBottom: 2 }}>
-            <Typography variant="h6" sx={{ padding: 2 }}>
-              Buscar Paciente
+        
+        {/* Campo de Anotações */}
+        <Grid item xs={12} md={6} sx={{ marginTop: 2 }}>
+            <Typography variant="h6" sx={{ padding: 2, backgroundColor: "#333333", color: "white" }}>
+              Anotações pessoais
             </Typography>
-            <CardContent>
-              <TextField
-                fullWidth
-                label="Digite o nome do paciente..."
-                variant="outlined"
-                sx={{ marginBottom: 2 }}
-              />
-              <Button variant="contained" color="primary">Buscar</Button>
-            </CardContent>
-          </Paper>
-
-          {/* Categorias */}
-          <Paper elevation={2} sx={{ marginBottom: 2 }}>
-            <Typography variant="h6" sx={{ padding: 2 }}>
-              Categorias de Tratamento
-            </Typography>
-            <CardContent>
-              {categorias.map((categoria) => (
-                <Typography key={categoria.id} variant="body2">
-                  <a href="#!">{categoria.nomeCategoria}</a>
-                </Typography>
-              ))}
-            </CardContent>
-          </Paper>
-
-          {/* Widget de Informações */}
-          <Paper elevation={2}>
-            <Typography variant="h6" sx={{ padding: 2 }}>
-              Informações da Clínica
-            </Typography>
-            <CardContent>
-              <Typography>
-                Bem-vindo ao sistema administrativo da nossa clínica psicológica. Aqui você pode acompanhar suas consultas e gerenciar pacientes.
-              </Typography>
-            </CardContent>
-          </Paper>
+            <TextField
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={12}
+              value={anotacoes}
+              onChange={handleAnotacoesChange}
+            />
+        </Grid>
+        <Grid item xs={12} md={6} >
+            
+            <Grid item xs={12} md={12}>
+              <PacientesPorCategoria />
+            </Grid>
         </Grid>
       </Grid>
 
-      <footer style={{ marginTop: 'auto', padding: '20px 0', backgroundColor: '#333', color: '#fff' }}>
+        
+
+      <footer style={{ marginTop: 70, padding: '20px 0', backgroundColor: '#333', color: '#fff' }}>
         <Container>
           <Typography variant="body2" align="center">
             Clínica Psicológica © 2023. Todos os direitos reservados.

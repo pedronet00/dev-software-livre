@@ -10,6 +10,7 @@ import ProblemIcon from '@mui/icons-material/Warning'; // Exemplo de ícone
 import PrescriptionIcon from '@mui/icons-material/Description'; // Exemplo de ícone
 import ForwardIcon from '@mui/icons-material/Forward'; // Exemplo de ícone
 import ScheduleIcon from '@mui/icons-material/Schedule'; // Exemplo de ícone
+import ChairIcon from '@mui/icons-material/Chair'; // Exemplo de ícone
 import LoginIcon from '@mui/icons-material/Login';
 
 const SidebarMenu = () => {
@@ -44,6 +45,9 @@ const SidebarMenu = () => {
         >
             <Typography variant="h6" sx={{ padding: '16px', textAlign: 'center' }}>Clínica</Typography>
             <List>
+                <ListItem>
+                    <ListItemText primary={`Olá, ${userName}`} />
+                </ListItem>
                 <ListItem component={Link} to="/">
                     <DashboardIcon sx={{ marginRight: 1 }} />
                     <ListItemText sx={{color: 'white'}} primary="Dashboard" />
@@ -60,6 +64,7 @@ const SidebarMenu = () => {
                 </ListItem>
                 <Divider />
                 <ListItem component={Link} to="/sessoes">
+                    <ChairIcon sx={{ marginRight: 1 }} />
                     <ListItemText sx={{color: 'white'}} primary="Sessões" />
                 </ListItem>
                 <Divider />
@@ -93,22 +98,10 @@ const SidebarMenu = () => {
                     <ListItemText sx={{color: 'white'}} primary="Agendamentos" />
                 </ListItem>
                 <Divider />
-                {userName ? (
-                    <>
-                        <ListItem>
-                            <ListItemText primary={`Olá, ${userName}`} />
-                        </ListItem>
-                        <ListItem button onClick={handleLogout}>
-                            <LoginIcon sx={{ marginRight: 1 }} />
-                            <ListItemText primary="Sair" />
-                        </ListItem>
-                    </>
-                ) : (
-                    <ListItem component={Link} to="/login">
-                        <LoginIcon sx={{ marginRight: 1 }} />
-                        <ListItemText primary="Login" />
-                    </ListItem>
-                )}
+                <ListItem button onClick={handleLogout}>
+                    <LoginIcon sx={{ marginRight: 1 }} />
+                    <ListItemText primary="Sair" />
+                </ListItem>
             </List>
         </Box>
     );

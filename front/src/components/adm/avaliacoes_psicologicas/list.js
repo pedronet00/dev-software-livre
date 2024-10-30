@@ -15,12 +15,13 @@ import api from '../../api/api'; // Assumindo que o api.js está na pasta api
 
 export function ListandoAvaliacoes() {
   const [avaliacoes, setAvaliacoes] = useState([]); // Estado para armazenar a lista de avaliações
+  const idUser = localStorage.getItem('idUser');
 
   useEffect(() => {
     // Faz a requisição para o endpoint /avaliacoes
     const fetchAvaliacoes = async () => {
       try {
-        const response = await api.get('/avaliacoes');
+        const response = await api.get(`/avaliacoes?idUser=${idUser}`);
         setAvaliacoes(response.data); // Atualiza o estado com a lista de avaliações
       } catch (error) {
         console.error('Erro ao buscar avaliações:', error);

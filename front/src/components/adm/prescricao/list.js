@@ -16,10 +16,10 @@ import api from '../../api/api';
 
 function ListandoPrescricoes() {
   const [prescricoes, setPrescricoes] = useState([]);
-
+  const idUser = localStorage.getItem('idUser');
   useEffect(() => {
     const fetchPrescricoes = async () => {
-      const response = await api.get('/prescricoes');
+      const response = await api.get(`/prescricoes?idUser=${idUser}`);
       setPrescricoes(response.data);
     };
     fetchPrescricoes();

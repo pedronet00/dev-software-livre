@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class ProblemaIdentificadoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $problemas = ProblemaIdentificado::all();
+        $problemas = ProblemaIdentificado::where('userId', $request->idUser)->get();
         return $problemas;
     }
 

@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class EncaminhamentoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $encaminhamentos = Encaminhamento::all();
+        $encaminhamentos = Encaminhamento::where('userId', $request->idUser)->get();
         return $encaminhamentos;
     }
 

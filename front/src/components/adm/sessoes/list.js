@@ -4,11 +4,11 @@ import api from '../../api/api'; // Assumindo que o api.js está na pasta api
 
 const ListandoSessoes = () => {
   const [sessoes, setSessoes] = useState([]);
-
+  const idUser = localStorage.getItem('idUser');
   useEffect(() => {
     const fetchSessoes = async () => {
       try {
-        const response = await api.get('/sessoes'); // Endpoint para buscar sessões
+        const response = await api.get(`/sessoes?idUser=${idUser}`); // Endpoint para buscar sessões
         setSessoes(response.data); // Atualiza o estado com a lista de sessões
       } catch (error) {
         console.error('Erro ao buscar sessões:', error);

@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class AgendamentoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $agendamentos = Agendamento::all();
+        $agendamentos = Agendamento::with('paciente')->where('userId', $request->idUser)->get();
         return $agendamentos;
     }
 

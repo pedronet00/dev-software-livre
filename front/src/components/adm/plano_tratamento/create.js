@@ -6,12 +6,13 @@ import api from '../../api/api';
 function PlanoTratamentoForm() {
   const { id } = useParams(); // Para o modo de edição
   const navigate = useNavigate();
+  const idUser = localStorage.getItem('idUser');
   const [formData, setFormData] = useState({
     paciente_id: '',
     data_inicio: '',
     objetivos_terapeuticos: '',
     progresso: '',
-    userId: 1 // Você pode substituir 1 pelo ID real do usuário logado, se disponível
+    userId: idUser // Você pode substituir 1 pelo ID real do usuário logado, se disponível
   });
   const [pacientes, setPacientes] = useState([]); // Estado para armazenar a lista de pacientes
 
@@ -19,7 +20,7 @@ function PlanoTratamentoForm() {
     // Buscar a lista de pacientes
     const fetchPacientes = async () => {
       try {
-        const response = await api.get('/pacientes');
+        const response = await api.get(`/pacientes?idUser=${idUser}`);
         setPacientes(response.data);
       } catch (error) {
         console.error('Erro ao buscar pacientes:', error);
