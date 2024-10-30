@@ -66,10 +66,10 @@ function Home() {
 
       <Grid container spacing={4} sx={{ marginTop: 4 }}>
         {/* Estatísticas rápidas */}
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={12}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4}>
-              <Card sx={{ backgroundColor: "info.main", color: "white" }}>
+              <Card sx={{ backgroundColor: "#333333", color: "white" }}>
                 <CardContent>
                   <Typography variant="h5">{qtdePacientes}</Typography>
                   <Typography>Total de Pacientes</Typography>
@@ -77,7 +77,7 @@ function Home() {
               </Card>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Card sx={{ backgroundColor: "warning.main", color: "white" }}>
+              <Card sx={{ backgroundColor: "#333333", color: "white" }}>
                 <CardContent>
                   <Typography variant="h5">{stats.consultasHoje}</Typography>
                   <Typography>Consultas Hoje</Typography>
@@ -85,7 +85,7 @@ function Home() {
               </Card>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Card sx={{ backgroundColor: "success.main", color: "white" }}>
+              <Card sx={{ backgroundColor: "#333333", color: "white" }}>
                 <CardContent>
                   <Typography variant="h5">{stats.profissionaisAtivos}</Typography>
                   <Typography>Profissionais Ativos</Typography>
@@ -96,7 +96,7 @@ function Home() {
 
           {/* Agendamentos de Hoje */}
           <Paper elevation={2} sx={{ marginTop: 4 }}>
-            <Typography variant="h6" sx={{ padding: 2, backgroundColor: "primary.main", color: "white" }}>
+            <Typography variant="h6" sx={{ padding: 2, backgroundColor: "#333333", color: "white" }}>
               Agendamentos de Hoje
             </Typography>
             <CardContent>
@@ -112,51 +112,6 @@ function Home() {
               ) : (
                 <Typography>Nenhum agendamento para hoje</Typography>
               )}
-            </CardContent>
-          </Paper>
-        </Grid>
-
-        {/* Sidebar */}
-        <Grid item xs={12} md={4}>
-          {/* Busca */}
-          <Paper elevation={2} sx={{ marginBottom: 2 }}>
-            <Typography variant="h6" sx={{ padding: 2 }}>
-              Buscar Paciente
-            </Typography>
-            <CardContent>
-              <TextField
-                fullWidth
-                label="Digite o nome do paciente..."
-                variant="outlined"
-                sx={{ marginBottom: 2 }}
-              />
-              <Button variant="contained" color="primary">Buscar</Button>
-            </CardContent>
-          </Paper>
-
-          {/* Categorias */}
-          <Paper elevation={2} sx={{ marginBottom: 2 }}>
-            <Typography variant="h6" sx={{ padding: 2 }}>
-              Categorias de Tratamento
-            </Typography>
-            <CardContent>
-              {categorias.map((categoria) => (
-                <Typography key={categoria.id} variant="body2">
-                  <a href="#!">{categoria.nomeCategoria}</a>
-                </Typography>
-              ))}
-            </CardContent>
-          </Paper>
-
-          {/* Widget de Informações */}
-          <Paper elevation={2}>
-            <Typography variant="h6" sx={{ padding: 2 }}>
-              Informações da Clínica
-            </Typography>
-            <CardContent>
-              <Typography>
-                Bem-vindo ao sistema administrativo da nossa clínica psicológica. Aqui você pode acompanhar suas consultas e gerenciar pacientes.
-              </Typography>
             </CardContent>
           </Paper>
         </Grid>
