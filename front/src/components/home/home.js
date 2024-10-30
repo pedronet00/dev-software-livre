@@ -8,9 +8,9 @@ import {
   Card,
   CardContent,
   TextField,
-  Button,
 } from "@mui/material";
 import dayjs from "dayjs";
+import PacientesPorCategoria from './pacientesPorCategoria';
 
 function Home() {
   const [stats, setStats] = useState({
@@ -20,7 +20,6 @@ function Home() {
   });
 
   const idUser = localStorage.getItem('idUser');
-
   const [qtdePacientes, setQtdePacientes] = useState(0);
   const [agendamentosHoje, setAgendamentosHoje] = useState([]);
   const [consultas, setConsultas] = useState([
@@ -32,6 +31,9 @@ function Home() {
     { id: 2, nomeCategoria: "Depressão" },
   ]);
 
+  // Campo de anotações
+  const [anotacoes, setAnotacoes] = useState(localStorage.getItem('anotacoes') || '');
+
   useEffect(() => {
     api
       .get(`/qtdePacientes?idUser=${idUser}`)
@@ -40,7 +42,6 @@ function Home() {
         console.error("ops! ocorreu um erro" + err);
       });
 
-    // Consulta para buscar agendamentos do dia atual
     api
       .get(`/agendamentos?idUser=${idUser}`)
       .then((response) => {
@@ -54,6 +55,13 @@ function Home() {
         console.error("Erro ao buscar agendamentos: " + err);
       });
   }, []);
+
+  // Atualiza e salva as anotações no localStorage automaticamente
+  const handleAnotacoesChange = (e) => {
+    const newAnotacoes = e.target.value;
+    setAnotacoes(newAnotacoes);
+    localStorage.setItem('anotacoes', newAnotacoes);
+  };
 
   return (
     <Container maxWidth="lg" className="bg-light">
@@ -115,9 +123,33 @@ function Home() {
             </CardContent>
           </Paper>
         </Grid>
+        
+        {/* Campo de Anotações */}
+        <Grid item xs={12} md={6} sx={{ marginTop: 2 }}>
+            <Typography variant="h6" sx={{ padding: 2, backgroundColor: "#333333", color: "white" }}>
+              Anotações pessoais
+            </Typography>
+            <TextField
+              label="Digite suas anotações"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={12}
+              value={anotacoes}
+              onChange={handleAnotacoesChange}
+            />
+        </Grid>
+        <Grid item xs={12} md={6} >
+            
+            <Grid item xs={12} md={12}>
+              <PacientesPorCategoria />
+            </Grid>
+        </Grid>
       </Grid>
 
-      <footer style={{ marginTop: 'auto', padding: '20px 0', backgroundColor: '#333', color: '#fff' }}>
+        
+
+      <footer style={{ marginTop: 70, padding: '20px 0', backgroundColor: '#333', color: '#fff' }}>
         <Container>
           <Typography variant="body2" align="center">
             Clínica Psicológica © 2023. Todos os direitos reservados.
