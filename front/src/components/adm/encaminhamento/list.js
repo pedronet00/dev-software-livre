@@ -14,10 +14,11 @@ import api from '../../api/api';
 
 function ListandoEncaminhamentos() {
   const [encaminhamentos, setEncaminhamentos] = useState([]);
+  const idUser = localStorage.getItem('idUser');
 
   useEffect(() => {
     const fetchEncaminhamentos = async () => {
-      const response = await api.get('/encaminhamentos');
+      const response = await api.get(`/encaminhamentos?idUser=${idUser}`);
       setEncaminhamentos(response.data);
     };
     fetchEncaminhamentos();

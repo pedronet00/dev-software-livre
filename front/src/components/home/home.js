@@ -19,7 +19,7 @@ function Home() {
     profissionaisAtivos: 8,
   });
 
-  
+  const idUser = localStorage.getItem('idUser');
 
   const [qtdePacientes, setQtdePacientes] = useState(0);
   const [agendamentosHoje, setAgendamentosHoje] = useState([]);
@@ -34,7 +34,7 @@ function Home() {
 
   useEffect(() => {
     api
-      .get("/qtdePacientes")
+      .get(`/qtdePacientes?idUser=${idUser}`)
       .then((response) => setQtdePacientes(response.data))
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
@@ -42,7 +42,7 @@ function Home() {
 
     // Consulta para buscar agendamentos do dia atual
     api
-      .get("http://127.0.0.1:8000/api/agendamentos")
+      .get(`/agendamentos?idUser=${idUser}`)
       .then((response) => {
         const today = dayjs().format("YYYY-MM-DD");
         const agendamentosHoje = response.data.filter((agendamento) =>

@@ -5,10 +5,11 @@ import api from '../../api/api';
 
 function ListandoDiagnosticos() {
   const [diagnosticos, setDiagnosticos] = useState([]);
+  const idUser = localStorage.getItem('idUser');
 
   useEffect(() => {
     const fetchDiagnosticos = async () => {
-      const response = await api.get('/diagnosticos');
+      const response = await api.get(`/diagnosticos?idUser=${idUser}`);
       setDiagnosticos(response.data);
     };
     fetchDiagnosticos();

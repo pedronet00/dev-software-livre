@@ -16,10 +16,11 @@ import api from '../../api/api';
 
 function ListandoProblemasIdentificados() {
   const [problemas, setProblemas] = useState([]);
+  const idUser = localStorage.getItem('idUser');
 
   useEffect(() => {
     const fetchProblemas = async () => {
-      const response = await api.get('/problemas-identificados');
+      const response = await api.get(`/problemas-identificados?idUser=${idUser}`);
       setProblemas(response.data);
     };
     fetchProblemas();

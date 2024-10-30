@@ -13,6 +13,8 @@ const CadastroPaciente = () => {
     enderecoPaciente: ''
   });
 
+  const idUser = localStorage.getItem('idUser');
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPaciente({ ...paciente, [name]: value });
@@ -36,7 +38,7 @@ const CadastroPaciente = () => {
     const dadosPaciente = {
       ...paciente,
       idadePaciente: idade,
-      userId: 1 // Adiciona a idade calculada
+      userId: idUser // Adiciona a idade calculada
     };
 
     try {

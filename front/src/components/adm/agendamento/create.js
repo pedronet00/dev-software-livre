@@ -16,17 +16,18 @@ import api from '../../api/api';
 function AgendamentoForm() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const idUser = localStorage.getItem('idUser');
   const [formData, setFormData] = useState({
     paciente_id: '', // Atualizado para refletir o formato esperado
     data: '',
     hora: '',
-    userId: 1, // userId fixo como 1
+    userId: idUser, // userId fixo como 1
   });
   const [pacientes, setPacientes] = useState([]);
 
   useEffect(() => {
     const fetchPacientes = async () => {
-      const response = await api.get('/pacientes');
+      const response = await api.get(`/pacientes?idUser=${idUser}`);
       setPacientes(response.data);
     };
     fetchPacientes();
@@ -42,7 +43,7 @@ function AgendamentoForm() {
             paciente_id: response.data.paciente_id, // Atualizado para refletir o formato esperado
             data, 
             hora,
-            userId: 1 // Manter userId fixo
+            userId: idUser // Manter userId fixo
           });
         });
     }

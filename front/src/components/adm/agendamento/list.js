@@ -16,10 +16,10 @@ import api from '../../api/api';
 
 function ListandoAgendamentos() {
   const [agendamentos, setAgendamentos] = useState([]);
-
+  const idUser = localStorage.getItem('idUser');
   useEffect(() => {
     const fetchAgendamentos = async () => {
-      const response = await api.get('/agendamentos');
+      const response = await api.get(`/agendamentos?idUser=${idUser}`);
       setAgendamentos(response.data);
     };
     fetchAgendamentos();
