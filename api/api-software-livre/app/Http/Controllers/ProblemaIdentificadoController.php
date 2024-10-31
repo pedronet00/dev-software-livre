@@ -16,9 +16,9 @@ class ProblemaIdentificadoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'paciente_id' => 'required',
-            'data' => 'required|date',
-            'descricao' => 'required',
+            'pacienteId' => 'required',
+            'dataIdentificacao' => 'required|date',
+            'problema' => 'required',
         ]);
 
         ProblemaIdentificado::create($request->all());
