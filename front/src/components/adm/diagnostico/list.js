@@ -30,7 +30,7 @@ function ListandoDiagnosticos() {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell>Descrição</TableCell>
+              <TableCell>Diagnóstico</TableCell>
               <TableCell>Data</TableCell>
               <TableCell>Ações</TableCell>
             </TableRow>
@@ -39,8 +39,8 @@ function ListandoDiagnosticos() {
             {diagnosticos.map(diagnostico => (
               <TableRow key={diagnostico.id}>
                 <TableCell>{diagnostico.id}</TableCell>
-                <TableCell>{diagnostico.descricao}</TableCell>
-                <TableCell>{new Date(diagnostico.data).toLocaleDateString()}</TableCell>
+                <TableCell>{diagnostico.diagnostico}</TableCell>
+                <TableCell>{new Date(diagnostico.dataDiagnostico).toLocaleDateString()}</TableCell>
                 <TableCell>
                   <Link to={`/diagnosticos/${diagnostico.id}`} style={{ textDecoration: 'none' }}>
                     <Button variant="outlined" color="warning">

@@ -11,36 +11,46 @@ import {
   Typography,
   Paper,
 } from '@mui/material';
-import api from '../../api/api'; // Assumindo que o api.js está na pasta api
+import { useNavigate } from 'react-router-dom';
+import api from '../../api/api';
 
 export function ListandoAvaliacoes() {
-  const [avaliacoes, setAvaliacoes] = useState([]); // Estado para armazenar a lista de avaliações
+  const [avaliacoes, setAvaliacoes] = useState([]);
   const idUser = localStorage.getItem('idUser');
+  const navigate = useNavigate(); // Hook para redirecionamento
 
   useEffect(() => {
-    // Faz a requisição para o endpoint /avaliacoes
     const fetchAvaliacoes = async () => {
       try {
         const response = await api.get(`/avaliacoes?idUser=${idUser}`);
-        setAvaliacoes(response.data); // Atualiza o estado com a lista de avaliações
+        setAvaliacoes(response.data);
       } catch (error) {
         console.error('Erro ao buscar avaliações:', error);
       }
     };
 
     fetchAvaliacoes();
-  }, []);
+  }, [idUser]);
 
   const handleCadastrarAvaliacao = () => {
-    window.location.href = '/cadastroAvaliacao'; // Redireciona para /cadastroAvaliacao
+    navigate('/cadastroAvaliacao');
+  };
+
+  const handleEditarAvaliacao = (id) => {
+    navigate(`/cadastroAvaliacao/${id}`); // Redireciona para a página de edição com o ID
   };
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h4" component="h2" gutterBottom className="mt-5" align="center">
+      <Typography variant="h4" component="h2" gutterBottom align="center">
         Listagem de Avaliações
       </Typography>
-      <Button variant="contained" color="primary" onClick={handleCadastrarAvaliacao} style={{ marginBottom: '20px' }}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleCadastrarAvaliacao}
+        style={{ marginBottom: '20px' }}
+      >
         Cadastrar Avaliação
       </Button>
 
@@ -64,6 +74,14 @@ export function ListandoAvaliacoes() {
                   <TableCell>{avaliacao.dataAvaliacao}</TableCell>
                   <TableCell>{avaliacao.observacoes}</TableCell>
                   <TableCell>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={() => handleEditarAvaliacao(avaliacao.id)}
+                      style={{ marginRight: '8px' }}
+                    >
+                      EDITAR
+                    </Button>
                     <Button variant="outlined" color="error">
                       EXCLUIR
                     </Button>

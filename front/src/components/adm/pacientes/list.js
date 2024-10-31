@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../api/api'; // Assumindo que o api.js está na pasta api
+import api from '../../api/api';
 import {
   Button,
   Table,
@@ -12,22 +12,23 @@ import {
   Paper,
   CircularProgress,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export function ListandoPacientes() {
-  const [pacientes, setPacientes] = useState([]); // Estado para armazenar a lista de pacientes
-  const [loading, setLoading] = useState(true); // Estado para controle de loading
+  const [pacientes, setPacientes] = useState([]);
+  const [loading, setLoading] = useState(true);
   const idUser = localStorage.getItem('idUser');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Faz a requisição para o endpoint /pacientes
     const fetchPacientes = async () => {
       try {
         const response = await api.get(`/pacientes?idUser=${idUser}`);
-        setPacientes(response.data); // Atualiza o estado com a lista de pacientes
+        setPacientes(response.data);
       } catch (error) {
         console.error('Erro ao buscar pacientes:', error);
       } finally {
-        setLoading(false); // Finaliza o loading independentemente do resultado
+        setLoading(false);
       }
     };
 
@@ -35,7 +36,11 @@ export function ListandoPacientes() {
   }, []);
 
   const handleCadastrarPaciente = () => {
-    window.location.href = '/cadastroPaciente'; // Redireciona para /cadastrarPaciente
+    navigate('/cadastroPaciente');
+  };
+
+  const handleEditarPaciente = (id) => {
+    navigate(`/cadastroPaciente/${id}`);
   };
 
   return (
@@ -75,10 +80,19 @@ export function ListandoPacientes() {
                     <TableCell>
                       <Button
                         variant="outlined"
+                        color="primary"
+                        size="small"
+                        onClick={() => handleEditarPaciente(paciente.id)}
+                        style={{ marginRight: '8px' }}
+                      >
+                        Editar
+                      </Button>
+                      <Button
+                        variant="outlined"
                         color="error"
                         size="small"
                         onClick={() => {
-                          // Aqui você pode implementar a lógica para excluir um paciente
+                          // Implementar lógica para excluir um paciente
                           console.log('Excluir paciente:', paciente.id);
                         }}
                       >

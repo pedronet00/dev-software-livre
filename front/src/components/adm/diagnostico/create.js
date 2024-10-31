@@ -7,10 +7,10 @@ function DiagnosticoForm() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    paciente_id: '',
-    data: '',
-    descricao: '',
-    detalhamento: '',
+    pacienteId: '',
+    dataDiagnostico: '',
+    descricaoDiagnostico: '',
+    diagnostico: '',
     userId: 1
   });
   const [pacientes, setPacientes] = useState([]); // Estado para armazenar a lista de pacientes
@@ -60,8 +60,8 @@ function DiagnosticoForm() {
               <InputLabel id="paciente-label">Selecione o Paciente</InputLabel>
               <Select
                 labelId="paciente-label"
-                value={formData.paciente_id}
-                onChange={(e) => setFormData({ ...formData, paciente_id: e.target.value })}
+                value={formData.pacienteId}
+                onChange={(e) => setFormData({ ...formData, pacienteId: e.target.value })}
                 label="Selecione o Paciente"
               >
                 <MenuItem value="">
@@ -85,8 +85,8 @@ function DiagnosticoForm() {
               InputLabelProps={{
                 shrink: true,
               }}
-              value={formData.data}
-              onChange={(e) => setFormData({ ...formData, data: e.target.value })}
+              value={formData.dataDiagnostico}
+              onChange={(e) => setFormData({ ...formData, dataDiagnostico: e.target.value })}
               required
             />
           </Grid>
@@ -98,21 +98,21 @@ function DiagnosticoForm() {
               fullWidth
               multiline
               rows={4}
-              value={formData.descricao}
-              onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
+              value={formData.descricaoDiagnostico}
+              onChange={(e) => setFormData({ ...formData, descricaoDiagnostico: e.target.value })}
               required
             />
           </Grid>
 
           <Grid item xs={12}>
             <TextField
-              label="Detalhamento"
+              label="Diagnóstico"
               variant="outlined"
               fullWidth
               multiline
               rows={4}
-              value={formData.detalhamento}
-              onChange={(e) => setFormData({ ...formData, detalhamento: e.target.value })}
+              value={formData.diagnostico}
+              onChange={(e) => setFormData({ ...formData, diagnostico: e.target.value })}
               required
             />
           </Grid>

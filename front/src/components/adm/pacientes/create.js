@@ -1,63 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Button, TextField, Grid, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import api from '../../api/api';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const CadastroPaciente = () => {
+export function CadastroPaciente() {
+  const { id } = useParams(); // Obtém o ID do paciente da URL
   const [paciente, setPaciente] = useState({
     nomePaciente: '',
-    idadePaciente: 0,
-    sexoPaciente: 1,
+    idadePaciente: '',
+    sexoPaciente: '',
     dataNascimentoPaciente: '',
     telefonePaciente: '',
     emailPaciente: '',
-    enderecoPaciente: ''
+    enderecoPaciente: '',
   });
+  const navigate = useNavigate();
 
-  const idUser = localStorage.getItem('idUser');
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setPaciente({ ...paciente, [name]: value });
-  };
-
-  const calcularIdade = (dataNascimento) => {
-    const hoje = new Date();
-    const nascimento = new Date(dataNascimento);
-    const idade = hoje.getFullYear() - nascimento.getFullYear();
-    const mes = hoje.getMonth() - nascimento.getMonth();
-    if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
-      return idade - 1;
+  useEffect(() => {
+    if (id) {
+      // Carrega dados do paciente para edição
+      const fetchPaciente = async () => {
+        try {
+          const response = await api.get(`/paciente/${id}`);
+          setPaciente(response.data.paciente);
+        } catch (error) {
+          console.error('Erro ao carregar paciente:', error);
+        }
+      };
+      fetchPaciente();
     }
-    return idade;
+  }, [id]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setPaciente((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Calcula a idade do paciente
-    const idade = calcularIdade(paciente.dataNascimentoPaciente);
-    const dadosPaciente = {
-      ...paciente,
-      idadePaciente: idade,
-      userId: idUser // Adiciona a idade calculada
-    };
-
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      const response = await api.post('/paciente', dadosPaciente);
-      console.log(response.data);
-      alert('Cadastro realizado com sucesso!');
-      // Limpa os campos do formulário após o cadastro
-      setPaciente({
-        nomePaciente: '',
-        idadePaciente: 0,
-        sexoPaciente: 1,
-        dataNascimentoPaciente: '',
-        telefonePaciente: '',
-        emailPaciente: '',
-        enderecoPaciente: ''
-      });
+      if (id) {
+        // Atualiza paciente
+        await api.put(`/paciente/${id}`, paciente);
+        alert('Paciente atualizado com sucesso!');
+      } else {
+        // Cria novo paciente
+        await api.post('/paciente', paciente);
+        alert('Paciente criado com sucesso!');
+      }
+      navigate('/pacientes');
     } catch (error) {
-      console.error('Erro ao cadastrar paciente:', error);
-      alert('Erro ao realizar cadastro. Tente novamente.');
+      console.error('Erro ao salvar paciente:', error);
     }
   };
 
@@ -152,8 +148,9 @@ const CadastroPaciente = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Button variant="contained" color="primary" type="submit" fullWidth>
-              Cadastrar Paciente
+            {/* Adicione outros campos conforme necessário */}
+            <Button type="submit" variant="contained" color="primary">
+              {id ? 'Atualizar' : 'Cadastrar'}
             </Button>
           </Grid>
         </Grid>

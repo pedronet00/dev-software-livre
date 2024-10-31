@@ -38,10 +38,10 @@ function ListandoPlanosTratamento() {
           {planos.map(plano => (
             <TableRow key={plano.id}>
               <TableCell>{plano.id}</TableCell>
-              <TableCell>{plano.objetivos_terapeuticos}</TableCell>
-              <TableCell>{new Date(plano.data_inicio).toLocaleDateString()}</TableCell>
+              <TableCell>{plano.objetivos}</TableCell>
+              <TableCell>{new Date(plano.dataInicio).toLocaleDateString()}</TableCell>
               <TableCell>
-                <Link to={`/planos-tratamento/${plano.id}`} style={{ textDecoration: 'none' }}>
+                <Link to={`/planos-tratamento/create/${plano.id}`} style={{ textDecoration: 'none' }}>
                   <Button variant="outlined" color="warning" size="small">
                     Editar
                   </Button>

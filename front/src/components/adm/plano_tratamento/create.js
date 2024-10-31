@@ -8,16 +8,15 @@ function PlanoTratamentoForm() {
   const navigate = useNavigate();
   const idUser = localStorage.getItem('idUser');
   const [formData, setFormData] = useState({
-    paciente_id: '',
-    data_inicio: '',
-    objetivos_terapeuticos: '',
+    pacienteId: '', // Atualizado para refletir o modelo
+    dataInicio: '',
+    objetivos: '',
     progresso: '',
-    userId: idUser // Você pode substituir 1 pelo ID real do usuário logado, se disponível
+    userId: idUser // Incluindo userId aqui
   });
-  const [pacientes, setPacientes] = useState([]); // Estado para armazenar a lista de pacientes
+  const [pacientes, setPacientes] = useState([]);
 
   useEffect(() => {
-    // Buscar a lista de pacientes
     const fetchPacientes = async () => {
       try {
         const response = await api.get(`/pacientes?idUser=${idUser}`);
@@ -30,25 +29,48 @@ function PlanoTratamentoForm() {
     fetchPacientes();
 
     if (id) {
-      // Se o id estiver presente, estamos no modo de edição
       api.get(`/plano-tratamento/${id}`)
         .then((response) => {
-          // Aqui, você deve garantir que o userId esteja incluído no formData ao editar
-          setFormData({ ...response.data, userId: response.data.userId || 1 });
+          // Ajusta o formData com os dados do plano de tratamento
+          setFormData({
+            pacienteId: response.data.pacienteId,
+            dataInicio: response.data.dataInicio,
+            objetivos: response.data.objetivos,
+            progresso: response.data.progresso,
+            userId: idUser // Certifica-se de que userId esteja presente
+          });
         });
     }
-  }, [id]);
+  }, [id, idUser]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Verifica se pacienteId está preenchido
+    if (!formData.pacienteId) {
+      alert('Por favor, selecione um paciente.');
+      return; // Impede o envio se pacienteId não estiver definido
+    }
+
+    // Envia todos os dados, incluindo userId
+    const { userId, ...dataToSubmit } = formData; // Exclui userId apenas para controle
+
     if (id) {
       // Atualizar plano de tratamento existente
-      api.put(`/plano-tratamento/${id}`, formData)
-        .then(() => navigate('/planos-tratamento'));
+      api.put(`/plano-tratamento/${id}`, { ...dataToSubmit, userId }) // Adiciona userId de volta
+        .then(() => navigate('/planos-tratamento'))
+        .catch((error) => {
+          console.error('Erro ao atualizar plano de tratamento:', error);
+          alert('Erro ao atualizar plano de tratamento. Verifique os dados e tente novamente.');
+        });
     } else {
       // Criar um novo plano de tratamento
-      api.post('/plano-tratamento', formData)
-        .then(() => navigate('/planos-tratamento'));
+      api.post('/plano-tratamento', { ...dataToSubmit, userId }) // Adiciona userId de volta
+        .then(() => navigate('/planos-tratamento'))
+        .catch((error) => {
+          console.error('Erro ao criar plano de tratamento:', error);
+          alert('Erro ao criar plano de tratamento. Verifique os dados e tente novamente.');
+        });
     }
   };
 
@@ -64,8 +86,8 @@ function PlanoTratamentoForm() {
               <InputLabel id="paciente-label">Selecione o Paciente</InputLabel>
               <Select
                 labelId="paciente-label"
-                value={formData.paciente_id}
-                onChange={(e) => setFormData({ ...formData, paciente_id: e.target.value })}
+                value={formData.pacienteId}
+                onChange={(e) => setFormData({ ...formData, pacienteId: e.target.value })}
                 variant="outlined"
               >
                 <MenuItem value="">
@@ -86,11 +108,9 @@ function PlanoTratamentoForm() {
               type="date"
               variant="outlined"
               fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-              value={formData.data_inicio}
-              onChange={(e) => setFormData({ ...formData, data_inicio: e.target.value })}
+              InputLabelProps={{ shrink: true }}
+              value={formData.dataInicio}
+              onChange={(e) => setFormData({ ...formData, dataInicio: e.target.value })}
               required
             />
           </Grid>
@@ -102,8 +122,8 @@ function PlanoTratamentoForm() {
               fullWidth
               multiline
               rows={4}
-              value={formData.objetivos_terapeuticos}
-              onChange={(e) => setFormData({ ...formData, objetivos_terapeuticos: e.target.value })}
+              value={formData.objetivos}
+              onChange={(e) => setFormData({ ...formData, objetivos: e.target.value })}
               required
             />
           </Grid>

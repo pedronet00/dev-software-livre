@@ -67,6 +67,10 @@ const router = createBrowserRouter([
           element: <CadastroPaciente />  
         },
         {
+          path: '/cadastroPaciente/:id',
+          element: <CadastroPaciente />  
+        },
+        {
           path: '/pacientes',
           element: <ListandoPacientes />  
         },
@@ -75,13 +79,13 @@ const router = createBrowserRouter([
           element: <CadastroAvaliacao />  
         },
         {
+          path: '/cadastroAvaliacao/:id',
+          element: <CadastroAvaliacao />  
+        },
+        {
           path: '/avaliacoes',
           element: <ListandoAvaliacoes />  
-        },
-        
-        
-        // Novas rotas que você pediu
-        
+        },       
         {
           path: '/sessoes',  // Formulário de criação e edição
           element: <ListandoSessoes />  
