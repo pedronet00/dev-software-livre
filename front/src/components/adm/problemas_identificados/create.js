@@ -8,9 +8,9 @@ function ProblemaIdentificadoForm() {
   const navigate = useNavigate();
   const idUser = localStorage.getItem('idUser');
   const [formData, setFormData] = useState({
-    paciente_id: '',
-    data: '',
-    descricao: '',
+    pacienteId: '',
+    dataIdentificacao: '',
+    problema: '',
     evolucao: '',
     userId: idUser
   });
@@ -60,8 +60,8 @@ function ProblemaIdentificadoForm() {
               <InputLabel id="paciente-label">Selecione o Paciente</InputLabel>
               <Select
                 labelId="paciente-label"
-                value={formData.paciente_id}
-                onChange={(e) => setFormData({ ...formData, paciente_id: e.target.value })}
+                value={formData.pacienteId}
+                onChange={(e) => setFormData({ ...formData, pacienteId: e.target.value })}
                 variant="outlined"
               >
                 <MenuItem value="">
@@ -85,8 +85,8 @@ function ProblemaIdentificadoForm() {
               InputLabelProps={{
                 shrink: true,
               }}
-              value={formData.data}
-              onChange={(e) => setFormData({ ...formData, data: e.target.value })}
+              value={formData.dataIdentificacao}
+              onChange={(e) => setFormData({ ...formData, dataIdentificacao: e.target.value })}
               required
             />
           </Grid>
@@ -98,8 +98,8 @@ function ProblemaIdentificadoForm() {
               fullWidth
               multiline
               rows={4}
-              value={formData.descricao}
-              onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
+              value={formData.problema}
+              onChange={(e) => setFormData({ ...formData, problema: e.target.value })}
               required
             />
           </Grid>

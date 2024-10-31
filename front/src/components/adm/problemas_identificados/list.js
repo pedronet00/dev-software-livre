@@ -41,7 +41,7 @@ function ListandoProblemasIdentificados() {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell>Descrição</TableCell>
+              <TableCell>Problema</TableCell>
               <TableCell>Data</TableCell>
               <TableCell>Ações</TableCell>
             </TableRow>
@@ -50,8 +50,8 @@ function ListandoProblemasIdentificados() {
             {problemas.map(problema => (
               <TableRow key={problema.id}>
                 <TableCell>{problema.id}</TableCell>
-                <TableCell>{problema.descricao}</TableCell>
-                <TableCell>{new Date(problema.data).toLocaleDateString()}</TableCell>
+                <TableCell>{problema.problema}</TableCell>
+                <TableCell>{new Date(problema.dataIdentificacao).toLocaleDateString()}</TableCell>
                 <TableCell>
                   <Link to={`/problemas-identificados/${problema.id}`} style={{ textDecoration: 'none' }}>
                     <Button variant="outlined" color="warning">
