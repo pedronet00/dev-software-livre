@@ -9,16 +9,16 @@ class DiagnosticoController extends Controller
 {
     public function index(Request $request)
     {
-        $diagnosticos = Diagnostico::where('userId', $request->idUser)->get();
+        $diagnosticos = Diagnostico::where('userId', $request->idUser)->with('paciente')->get();
         return $diagnosticos;
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'paciente_id' => 'required',
-            'data' => 'required|date',
-            'descricao' => 'required',
+            'pacienteId' => 'required',
+            'dataDiagnostico' => 'required|date',
+            'descricaoDiagnostico' => 'required',
         ]);
 
         Diagnostico::create($request->all());

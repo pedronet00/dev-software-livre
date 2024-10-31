@@ -24,12 +24,15 @@ Route::get('/user', function (Request $request) {
 Route::get('/pacientes', [PacienteController::class, 'index']);
 Route::get('/qtdePacientes', [PacienteController::class, 'pacienteCount']);
 Route::post('/paciente', [PacienteController::class, 'store']);
+Route::put('/paciente/{id}', [PacienteController::class, 'update']);
 Route::get('/paciente/{id}', [PacienteController::class, 'show']);
 Route::delete('/post/{id}', [PacienteController::class, 'destroy']);
 
 //* AVALIAÇÕES PSICOLÓGICAS
 Route::get('/avaliacoes', [AvaliacoesPsicologicasController::class, 'index']);
 Route::post('/avaliacoes', [AvaliacoesPsicologicasController::class, 'store']);
+Route::get('/avaliacoes/{id}', [AvaliacoesPsicologicasController::class, 'show']);
+Route::put('/avaliacoes/{id}', [AvaliacoesPsicologicasController::class, 'update']);
 
 //* AUTH
 Route::post('/register', [AuthController::class, 'register']);
@@ -39,6 +42,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/planos-tratamento', [PlanoTratamentoController::class, 'index']);
 Route::post('/plano-tratamento', [PlanoTratamentoController::class, 'store']);
 Route::put('/plano-tratamento/{id}', [PlanoTratamentoController::class, 'update']);
+Route::get('/plano-tratamento/{id}', [PlanoTratamentoController::class, 'show']);
 
 //* DIAGNÓSTICOS
 Route::get('/diagnosticos', [DiagnosticoController::class, 'index']);

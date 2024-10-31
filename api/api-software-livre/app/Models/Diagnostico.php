@@ -9,10 +9,10 @@ class Diagnostico extends Model
     protected $table = 'diagnosticos';
 
     protected $fillable = [
-        'paciente_id', 
-        'data', 
-        'descricao', 
-        'detalhamento',
+        'pacienteId', 
+        'dataDiagnostico', 
+        'descricaoDiagnostico', 
+        'diagnostico',
         'userId'
     ];
 

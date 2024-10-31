@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PlanoTratamento;
 use Illuminate\Http\Request;
+use Exception;
 
 class PlanoTratamentoController extends Controller
 {
@@ -13,17 +14,34 @@ class PlanoTratamentoController extends Controller
         return $planos;
     }
 
+    public function show(string $id){
+
+        $plano = PlanoTratamento::find($id);
+
+        return $plano;
+    }
+
     public function store(Request $request)
     {
-        $request->validate([
-            'paciente_id' => 'required',
-            'data_inicio' => 'required|date',
-            'objetivos_terapeuticos' => 'required',
-            'userId' => 'required'
+        try{
+            $request->validate([
+                'pacienteId' => 'required',
+                'dataInicio' => 'required|date',
+                'objetivos' => 'required',
+                'userId' => 'required'
+            ]);
+    
+            $plano = PlanoTratamento::create($request->all());
+        } catch(Exception $e){
+            return response()->json([
+                'message' => 'Erro!',
+                'erros' => $e->getMessage()
+            ]);
+        }
+        return response()->json([
+            'message' => 'Sucesso!',
+            'plano' => $plano
         ]);
-
-        PlanoTratamento::create($request->all());
-        return redirect()->back()->with('success', 'Plano de tratamento criado com sucesso.');
     }
 
     public function update(Request $request, $id)

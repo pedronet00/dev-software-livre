@@ -10,9 +10,9 @@ class PlanoTratamento extends Model
     protected $table = 'planos_tratamento';
 
     protected $fillable = [
-        'paciente_id', 
-        'data_inicio', 
-        'objetivos_terapeuticos', 
+        'pacienteId', 
+        'dataInicio', 
+        'objetivos', 
         'progresso',
         'userId'
     ];
