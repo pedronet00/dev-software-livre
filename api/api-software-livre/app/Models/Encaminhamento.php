@@ -9,10 +9,10 @@ class Encaminhamento extends Model
     protected $table = 'encaminhamentos';
 
     protected $fillable = [
-        'paciente_id', 
-        'data', 
-        'motivo', 
-        'profissional_nome',
+        'pacienteId', 
+        'dataEncaminhamento', 
+        'descricaoEncaminhamento', 
+        'profissionalEncaminhado',
         'userId'
     ];
 

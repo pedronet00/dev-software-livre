@@ -16,10 +16,10 @@ class EncaminhamentoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'paciente_id' => 'required',
-            'data' => 'required|date',
-            'motivo' => 'required',
-            'profissional_nome' => 'required',
+            'pacienteId' => 'required',
+            'dataEncaminhamento' => 'required|date',
+            'descricaoEncaminhamento' => 'required',
+            'profissionalEncaminhado' => 'required',
         ]);
 
         Encaminhamento::create($request->all());
