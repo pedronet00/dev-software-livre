@@ -18,10 +18,10 @@ function EncaminhamentoForm() {
   const navigate = useNavigate();
   const idUser = localStorage.getItem('idUser');
   const [formData, setFormData] = useState({
-    paciente_id: '',
-    data: '',
-    motivo: '',
-    profissional_nome: '',
+    pacienteId: '',
+    dataEncaminhamento: '',
+    descricaoEncaminhamento: '',
+    profissionalEncaminhado: '',
     userId: idUser // Adiciona o userId fixo como 1
   });
   const [pacientes, setPacientes] = useState([]);
@@ -65,8 +65,8 @@ function EncaminhamentoForm() {
             <FormControl variant="outlined" fullWidth required>
               <InputLabel>Paciente</InputLabel>
               <Select
-                value={formData.paciente_id}
-                onChange={(e) => setFormData({ ...formData, paciente_id: e.target.value })}
+                value={formData.pacienteId}
+                onChange={(e) => setFormData({ ...formData, pacienteId: e.target.value })}
                 label="Paciente"
               >
                 {pacientes.map((paciente) => (
@@ -87,8 +87,8 @@ function EncaminhamentoForm() {
               InputLabelProps={{
                 shrink: true,
               }}
-              value={formData.data}
-              onChange={(e) => setFormData({ ...formData, data: e.target.value })}
+              value={formData.dataEncaminhamento}
+              onChange={(e) => setFormData({ ...formData, dataEncaminhamento: e.target.value })}
               required
             />
           </Grid>
@@ -98,8 +98,8 @@ function EncaminhamentoForm() {
               label="Motivo"
               variant="outlined"
               fullWidth
-              value={formData.motivo}
-              onChange={(e) => setFormData({ ...formData, motivo: e.target.value })}
+              value={formData.descricaoEncaminhamento}
+              onChange={(e) => setFormData({ ...formData, descricaoEncaminhamento: e.target.value })}
               required
             />
           </Grid>
@@ -109,8 +109,8 @@ function EncaminhamentoForm() {
               label="Profissional"
               variant="outlined"
               fullWidth
-              value={formData.profissional_nome}
-              onChange={(e) => setFormData({ ...formData, profissional_nome: e.target.value })}
+              value={formData.profissionalEncaminhado}
+              onChange={(e) => setFormData({ ...formData, profissionalEncaminhado: e.target.value })}
               required
             />
           </Grid>

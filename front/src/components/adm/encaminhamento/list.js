@@ -42,7 +42,7 @@ function ListandoEncaminhamentos() {
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
-            <TableCell>Motivo</TableCell>
+            <TableCell>Descrição</TableCell>
             <TableCell>Data</TableCell>
             <TableCell>Profissional</TableCell>
             <TableCell>Ações</TableCell>
@@ -52,9 +52,9 @@ function ListandoEncaminhamentos() {
           {encaminhamentos.map((encaminhamento) => (
             <TableRow key={encaminhamento.id}>
               <TableCell>{encaminhamento.id}</TableCell>
-              <TableCell>{encaminhamento.motivo}</TableCell>
-              <TableCell>{new Date(encaminhamento.data).toLocaleDateString()}</TableCell>
-              <TableCell>{encaminhamento.profissional}</TableCell>
+              <TableCell>{encaminhamento.descricaoEncaminhamento}</TableCell>
+              <TableCell>{new Date(encaminhamento.dataEncaminhamento).toLocaleDateString()}</TableCell>
+              <TableCell>{encaminhamento.profissionalEncaminhado}</TableCell>
               <TableCell>
                 <Button 
                   component={Link} 
