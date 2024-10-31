@@ -112,8 +112,8 @@ function Home() {
                 agendamentosHoje.map((agendamento) => (
                   <div key={agendamento.id} className="mb-3">
                     <Typography><strong>Paciente:</strong> {agendamento.paciente.nomePaciente}</Typography>
-                    <Typography><strong>Data:</strong> {agendamento.data}</Typography>
-                    <Typography><strong>Hora:</strong> {agendamento.hora}</Typography>
+                    <Typography><strong>Data:</strong> {agendamento.dataAgendamento}</Typography>
+                    <Typography><strong>Hora:</strong> {agendamento.horaAgendamento}</Typography>
                     <hr />
                   </div>
                 ))

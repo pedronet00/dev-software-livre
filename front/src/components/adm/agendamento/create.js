@@ -18,9 +18,9 @@ function AgendamentoForm() {
   const navigate = useNavigate();
   const idUser = localStorage.getItem('idUser');
   const [formData, setFormData] = useState({
-    paciente_id: '', // Atualizado para refletir o formato esperado
-    data: '',
-    hora: '',
+    pacienteId: '', // Atualizado para refletir o formato esperado
+    dataAgendamento: '',
+    horaAgendamento: '',
     userId: idUser, // userId fixo como 1
   });
   const [pacientes, setPacientes] = useState([]);
@@ -38,11 +38,10 @@ function AgendamentoForm() {
       api.get(`/agendamento/${id}`)
         .then((response) => {
           // Separar data e hora se já estiver no formato correto
-          const [data, hora] = response.data.data_hora.split('T');
           setFormData({ 
-            paciente_id: response.data.paciente_id, // Atualizado para refletir o formato esperado
-            data, 
-            hora,
+            pacienteId: response.data.pacienteId, // Atualizado para refletir o formato esperado
+            dataAgendamento: response.data.dataAgendamento, 
+            horaAgendamento: response.data.horaAgendamento,
             userId: idUser // Manter userId fixo
           });
         });
@@ -53,14 +52,14 @@ function AgendamentoForm() {
     e.preventDefault();
 
     // Validar se os campos estão preenchidos
-    if (!formData.data || !formData.hora || !formData.paciente_id) {
+    if (!formData.dataAgendamento || !formData.horaAgendamento || !formData.pacienteId) {
       alert('Por favor, preencha todos os campos obrigatórios.');
       return;
     }
 
-    const { paciente_id, data, hora, userId } = formData;
+    const { pacienteId, dataAgendamento, horaAgendamento, userId } = formData;
 
-    const dataToSend = { paciente_id, data, hora, userId }; // Enviando dados no formato correto
+    const dataToSend = { pacienteId, dataAgendamento, horaAgendamento, userId }; // Enviando dados no formato correto
 
     if (id) {
       api.put(`/agendamento/${id}`, dataToSend)
@@ -85,8 +84,8 @@ function AgendamentoForm() {
               <InputLabel>Paciente</InputLabel>
               <Select
                 label="Paciente"
-                value={formData.paciente_id} // Atualizado para refletir o formato esperado
-                onChange={(e) => setFormData({ ...formData, paciente_id: e.target.value })}
+                value={formData.pacienteId} // Atualizado para refletir o formato esperado
+                onChange={(e) => setFormData({ ...formData, pacienteId: e.target.value })}
                 required
               >
                 {pacientes.map((paciente) => (
@@ -107,8 +106,8 @@ function AgendamentoForm() {
               InputLabelProps={{
                 shrink: true,
               }}
-              value={formData.data}
-              onChange={(e) => setFormData({ ...formData, data: e.target.value })}
+              value={formData.dataAgendamento}
+              onChange={(e) => setFormData({ ...formData, dataAgendamento: e.target.value })}
               required
             />
           </Grid>
@@ -122,8 +121,8 @@ function AgendamentoForm() {
               InputLabelProps={{
                 shrink: true,
               }}
-              value={formData.hora}
-              onChange={(e) => setFormData({ ...formData, hora: e.target.value })}
+              value={formData.horaAgendamento}
+              onChange={(e) => setFormData({ ...formData, horaAgendamento: e.target.value })}
               required
             />
           </Grid>

@@ -53,8 +53,8 @@ function ListandoAgendamentos() {
             {agendamentos.map((agendamento) => (
               <TableRow key={agendamento.id}>
                 <TableCell>{agendamento.id}</TableCell>
-                <TableCell>{new Date(agendamento.data).toLocaleDateString()}</TableCell>
-                <TableCell>{agendamento.hora}</TableCell>
+                <TableCell>{new Date(agendamento.dataAgendamento).toLocaleDateString()}</TableCell>
+                <TableCell>{agendamento.horaAgendamento}</TableCell>
                 <TableCell>
                   <Button
                     component={Link}
