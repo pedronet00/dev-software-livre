@@ -16,7 +16,7 @@ class AgendamentoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'paciente_id' => 'required',
+            'pacienteId' => 'required',
             // 'data' => 'required|date',
             // 'hora' => 'required',
         ]);

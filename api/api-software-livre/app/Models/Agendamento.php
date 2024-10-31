@@ -3,21 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Paciente;
 
 class Agendamento extends Model
 {
     protected $table = 'agendamentos';
 
     protected $fillable = [
-        'paciente_id', 
-        'data', 
-        'hora',
-        'userId'
+        'pacienteId', 
+        'dataAgendamento', 
+        'horaAgendamento',
+        'userId',
     ];
 
     public function paciente()
     {
-        return $this->belongsTo(Paciente::class);
+        return $this->belongsTo(Paciente::class, 'pacienteId');
     }
 }
 
