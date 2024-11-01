@@ -22,14 +22,7 @@ function Home() {
   const idUser = localStorage.getItem('idUser');
   const [qtdePacientes, setQtdePacientes] = useState(0);
   const [agendamentosHoje, setAgendamentosHoje] = useState([]);
-  const [consultas, setConsultas] = useState([
-    { id: 1, paciente: "João Silva", horario: "10:00 AM", profissional: "Dra. Maria" },
-    { id: 2, paciente: "Ana Souza", horario: "11:30 AM", profissional: "Dr. Carlos" },
-  ]);
-  const [categorias, setCategorias] = useState([
-    { id: 1, nomeCategoria: "Ansiedade" },
-    { id: 2, nomeCategoria: "Depressão" },
-  ]);
+  
 
   // Campo de anotações
   const [anotacoes, setAnotacoes] = useState(localStorage.getItem('anotacoes') || '');
