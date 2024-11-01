@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 export function CadastroPaciente() {
   const { id } = useParams(); // Obtém o ID do paciente da URL
+  const idUser = localStorage.getItem('idUser');
   const [paciente, setPaciente] = useState({
     nomePaciente: '',
     idadePaciente: '',
@@ -13,6 +14,7 @@ export function CadastroPaciente() {
     telefonePaciente: '',
     emailPaciente: '',
     enderecoPaciente: '',
+    userId: idUser 
   });
   const navigate = useNavigate();
 
@@ -39,16 +41,36 @@ export function CadastroPaciente() {
     }));
   };
 
+  const calcularIdade = (dataNascimento) => {
+    const nascimento = new Date(dataNascimento);
+    const hoje = new Date();
+    let idade = hoje.getFullYear() - nascimento.getFullYear();
+    const mes = hoje.getMonth() - nascimento.getMonth();
+
+    // Verifica se o mês e o dia ainda não passaram no ano atual
+    if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+      idade--;
+    }
+
+    return idade;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Calcula a idade com base na data de nascimento preenchida
+    const idadeCalculada = calcularIdade(paciente.dataNascimentoPaciente);
+
     try {
+      const pacienteComIdade = { ...paciente, idadePaciente: idadeCalculada };
+
       if (id) {
         // Atualiza paciente
-        await api.put(`/paciente/${id}`, paciente);
+        await api.put(`/paciente/${id}`, pacienteComIdade);
         alert('Paciente atualizado com sucesso!');
       } else {
         // Cria novo paciente
-        await api.post('/paciente', paciente);
+        await api.post('/paciente', pacienteComIdade);
         alert('Paciente criado com sucesso!');
       }
       navigate('/pacientes');

@@ -11,25 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::table('avaliacoes_psicologicas', function (Blueprint $table) {
-        //     $table->integer('userId');
-        // });
+        Schema::table('avaliacoes_psicologicas', function (Blueprint $table) {
+            $table->integer('userId');
+        });
 
-        // Schema::table('sessoes_terapia', function (Blueprint $table) {
-        //     $table->integer('userId');
-        // });
+        Schema::table('sessoes_terapia', function (Blueprint $table) {
+            $table->integer('userId');
+        });
 
-        // Schema::table('planos_tratamento', function (Blueprint $table) {
-        //     $table->integer('userId');
-        // });
+        Schema::table('planos_tratamento', function (Blueprint $table) {
+            $table->integer('userId');
+        });
 
-        // Schema::table('diagnosticos', function (Blueprint $table) {
-        //     $table->integer('userId');
-        // });
+        Schema::table('diagnosticos', function (Blueprint $table) {
+            $table->integer('userId');
+        });
 
-        // Schema::table('problemas_identificados', function (Blueprint $table) {
-        //     $table->integer('userId');
-        // });
+        Schema::table('problemas_identificados', function (Blueprint $table) {
+            $table->integer('userId');
+        });
 
         Schema::table('prescricoes', function (Blueprint $table) {
             $table->integer('userId');
@@ -39,9 +39,13 @@ return new class extends Migration
             $table->integer('userId');
         });
 
-        // Schema::table('agendamentos', function (Blueprint $table) {
-        //     $table->integer('userId');
-        // });
+        Schema::table('agendamentos', function (Blueprint $table) {
+            $table->integer('userId');
+        });
+
+        Schema::table('pacientes', function (Blueprint $table) {
+            $table->integer('userId');
+        });
     }
 
     /**
