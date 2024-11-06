@@ -69,7 +69,7 @@ function Home() {
         {/* Estatísticas rápidas */}
         <Grid item xs={12} md={12}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={6}>
               <Card sx={{ backgroundColor: "#333333", color: "white" }}>
                 <CardContent>
                   <Typography variant="h5">{qtdePacientes}</Typography>
@@ -77,7 +77,7 @@ function Home() {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={6}>
               <Card sx={{ backgroundColor: "#333333", color: "white" }}>
                 <CardContent>
                   <Typography variant="h5">{stats.consultasHoje}</Typography>
@@ -85,14 +85,7 @@ function Home() {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={4}>
-              <Card sx={{ backgroundColor: "#333333", color: "white" }}>
-                <CardContent>
-                  <Typography variant="h5">{stats.profissionaisAtivos}</Typography>
-                  <Typography>Profissionais Ativos</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
+            
           </Grid>
 
           {/* Agendamentos de Hoje */}

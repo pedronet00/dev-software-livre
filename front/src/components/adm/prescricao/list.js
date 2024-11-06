@@ -17,6 +17,7 @@ import api from '../../api/api';
 function ListandoPrescricoes() {
   const [prescricoes, setPrescricoes] = useState([]);
   const idUser = localStorage.getItem('idUser');
+  
   useEffect(() => {
     const fetchPrescricoes = async () => {
       const response = await api.get(`/prescricoes?idUser=${idUser}`);
@@ -24,6 +25,19 @@ function ListandoPrescricoes() {
     };
     fetchPrescricoes();
   }, []);
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Tem certeza de que deseja excluir esta prescrição?')) {
+      try {
+        await api.delete(`/prescricao/${id}`);
+        setPrescricoes(prescricoes.filter(prescricao => prescricao.id !== id));
+        alert('Prescrição excluída com sucesso!');
+      } catch (error) {
+        console.error('Erro ao excluir prescrição:', error);
+        alert('Erro ao excluir a prescrição.');
+      }
+    }
+  };
 
   return (
     <Container>
@@ -39,7 +53,6 @@ function ListandoPrescricoes() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
               <TableCell>Descrição</TableCell>
               <TableCell>Data</TableCell>
               <TableCell>Ações</TableCell>
@@ -48,15 +61,22 @@ function ListandoPrescricoes() {
           <TableBody>
             {prescricoes.map((prescricao) => (
               <TableRow key={prescricao.id}>
-                <TableCell>{prescricao.id}</TableCell>
                 <TableCell>{prescricao.descricao}</TableCell>
                 <TableCell>{new Date(prescricao.data).toLocaleDateString()}</TableCell>
                 <TableCell>
                   <Link to={`/prescricoes/create/${prescricao.id}`} style={{ textDecoration: 'none' }}>
-                    <Button variant="outlined" color="warning">
+                    <Button variant="outlined" color="warning" size="small" style={{ marginRight: '8px' }}>
                       Editar
                     </Button>
                   </Link>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    onClick={() => handleDelete(prescricao.id)}
+                  >
+                    Excluir
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

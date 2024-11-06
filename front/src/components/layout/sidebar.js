@@ -48,56 +48,47 @@ const SidebarMenu = () => {
                 <ListItem>
                     <ListItemText primary={`Olá, ${userName}`} />
                 </ListItem>
-                <ListItem component={Link} to="/">
-                    <DashboardIcon sx={{ marginRight: 1 }} />
-                    <ListItemText sx={{color: 'white'}} primary="Dashboard" />
-                </ListItem>
-                <Divider />
-                <ListItem component={Link} to="/pacientes">
-                    <PeopleIcon sx={{ marginRight: 1 }} />
-                    <ListItemText sx={{color: 'white'}} primary="Pacientes" />
-                </ListItem>
-                <Divider />
-                <ListItem component={Link} to="/avaliacoes">
-                    <AssessmentIcon sx={{ marginRight: 1 }} />
-                    <ListItemText sx={{color: 'white'}} primary="Avaliações" />
-                </ListItem>
-                <Divider />
-                <ListItem component={Link} to="/sessoes">
-                    <ChairIcon sx={{ marginRight: 1 }} />
-                    <ListItemText sx={{color: 'white'}} primary="Sessões" />
-                </ListItem>
-                <Divider />
-                <ListItem component={Link} to="/planos-tratamento">
-                    <TreatmentIcon sx={{ marginRight: 1 }} />
-                    <ListItemText sx={{color: 'white'}} primary="Planos de Tratamento" />
-                </ListItem>
-                <Divider />
-                <ListItem component={Link} to="/diagnosticos">
-                    <DiagnosisIcon sx={{ marginRight: 1 }} />
-                    <ListItemText sx={{color: 'white'}} primary="Diagnósticos" />
-                </ListItem>
-                <Divider />
-                <ListItem component={Link} to="/problemas-identificados">
-                    <ProblemIcon sx={{ marginRight: 1 }} />
-                    <ListItemText sx={{color: 'white'}} primary="Problemas Identificados" />
-                </ListItem>
-                <Divider />
-                <ListItem component={Link} to="/prescricoes">
-                    <PrescriptionIcon sx={{ marginRight: 1 }} />
-                    <ListItemText sx={{color: 'white'}} primary="Prescrições" />
-                </ListItem>
-                <Divider />
-                <ListItem component={Link} to="/encaminhamentos">
-                    <ForwardIcon sx={{ marginRight: 1 }} />
-                    <ListItemText sx={{color: 'white'}} primary="Encaminhamentos" />
-                </ListItem>
                 <Divider />
                 <ListItem component={Link} to="/agendamentos">
                     <ScheduleIcon sx={{ marginRight: 1 }} />
                     <ListItemText sx={{color: 'white'}} primary="Agendamentos" />
                 </ListItem>
-                <Divider />
+                <ListItem component={Link} to="/avaliacoes">
+                    <AssessmentIcon sx={{ marginRight: 1 }} />
+                    <ListItemText sx={{color: 'white'}} primary="Avaliações" />
+                </ListItem>
+                <ListItem component={Link} to="/">
+                    <DashboardIcon sx={{ marginRight: 1 }} />
+                    <ListItemText sx={{color: 'white'}} primary="Dashboard" />
+                </ListItem>
+                <ListItem component={Link} to="/diagnosticos">
+                    <DiagnosisIcon sx={{ marginRight: 1 }} />
+                    <ListItemText sx={{color: 'white'}} primary="Diagnósticos" />
+                </ListItem>
+                <ListItem component={Link} to="/encaminhamentos">
+                    <ForwardIcon sx={{ marginRight: 1 }} />
+                    <ListItemText sx={{color: 'white'}} primary="Encaminhamentos" />
+                </ListItem>
+                <ListItem component={Link} to="/pacientes">
+                    <PeopleIcon sx={{ marginRight: 1 }} />
+                    <ListItemText sx={{color: 'white'}} primary="Pacientes" />
+                </ListItem>
+                <ListItem component={Link} to="/planos-tratamento">
+                    <TreatmentIcon sx={{ marginRight: 1 }} />
+                    <ListItemText sx={{color: 'white'}} primary="Planos de Tratamento" />
+                </ListItem>
+                <ListItem component={Link} to="/prescricoes">
+                    <PrescriptionIcon sx={{ marginRight: 1 }} />
+                    <ListItemText sx={{color: 'white'}} primary="Prescrições" />
+                </ListItem>
+                <ListItem component={Link} to="/problemas-identificados">
+                    <ProblemIcon sx={{ marginRight: 1 }} />
+                    <ListItemText sx={{color: 'white'}} primary="Problemas Identificados" />
+                </ListItem>
+                <ListItem component={Link} to="/sessoes">
+                    <ChairIcon sx={{ marginRight: 1 }} />
+                    <ListItemText sx={{color: 'white'}} primary="Sessões" />
+                </ListItem>
                 <ListItem button onClick={handleLogout}>
                     <LoginIcon sx={{ marginRight: 1 }} />
                     <ListItemText primary="Sair" />

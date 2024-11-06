@@ -17,7 +17,7 @@ import api from '../../api/api';
 export function ListandoAvaliacoes() {
   const [avaliacoes, setAvaliacoes] = useState([]);
   const idUser = localStorage.getItem('idUser');
-  const navigate = useNavigate(); // Hook para redirecionamento
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAvaliacoes = async () => {
@@ -28,7 +28,6 @@ export function ListandoAvaliacoes() {
         console.error('Erro ao buscar avaliações:', error);
       }
     };
-
     fetchAvaliacoes();
   }, [idUser]);
 
@@ -37,7 +36,20 @@ export function ListandoAvaliacoes() {
   };
 
   const handleEditarAvaliacao = (id) => {
-    navigate(`/cadastroAvaliacao/${id}`); // Redireciona para a página de edição com o ID
+    navigate(`/cadastroAvaliacao/${id}`);
+  };
+
+  const handleExcluirAvaliacao = async (id) => {
+    if (window.confirm('Tem certeza de que deseja excluir esta avaliação?')) {
+      try {
+        await api.delete(`/avaliacoes/${id}`);
+        setAvaliacoes(avaliacoes.filter((avaliacao) => avaliacao.id !== id));
+        alert('Avaliação excluída com sucesso!');
+      } catch (error) {
+        console.error('Erro ao excluir a avaliação:', error);
+        alert('Erro ao excluir a avaliação.');
+      }
+    }
   };
 
   return (
@@ -58,7 +70,6 @@ export function ListandoAvaliacoes() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>#</TableCell>
               <TableCell>Paciente</TableCell>
               <TableCell>Data da Avaliação</TableCell>
               <TableCell>Observações</TableCell>
@@ -69,7 +80,6 @@ export function ListandoAvaliacoes() {
             {avaliacoes.length > 0 ? (
               avaliacoes.map((avaliacao) => (
                 <TableRow key={avaliacao.id}>
-                  <TableCell>{avaliacao.id}</TableCell>
                   <TableCell>{avaliacao.paciente.nomePaciente || 'Paciente não encontrado'}</TableCell>
                   <TableCell>{avaliacao.dataAvaliacao}</TableCell>
                   <TableCell>{avaliacao.observacoes}</TableCell>
@@ -82,7 +92,11 @@ export function ListandoAvaliacoes() {
                     >
                       EDITAR
                     </Button>
-                    <Button variant="outlined" color="error">
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      onClick={() => handleExcluirAvaliacao(avaliacao.id)}
+                    >
                       EXCLUIR
                     </Button>
                   </TableCell>

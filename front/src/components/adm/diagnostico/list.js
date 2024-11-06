@@ -13,7 +13,20 @@ function ListandoDiagnosticos() {
       setDiagnosticos(response.data);
     };
     fetchDiagnosticos();
-  }, []);
+  }, [idUser]);
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Tem certeza de que deseja excluir este diagnóstico?')) {
+      try {
+        await api.delete(`/diagnostico/${id}`);
+        setDiagnosticos(diagnosticos.filter(diagnostico => diagnostico.id !== id));
+        alert('Diagnóstico excluído com sucesso!');
+      } catch (error) {
+        console.error('Erro ao excluir o diagnóstico:', error);
+        alert('Erro ao excluir o diagnóstico.');
+      }
+    }
+  };
 
   return (
     <Container>
@@ -29,7 +42,6 @@ function ListandoDiagnosticos() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
               <TableCell>Diagnóstico</TableCell>
               <TableCell>Data</TableCell>
               <TableCell>Ações</TableCell>
@@ -38,15 +50,21 @@ function ListandoDiagnosticos() {
           <TableBody>
             {diagnosticos.map(diagnostico => (
               <TableRow key={diagnostico.id}>
-                <TableCell>{diagnostico.id}</TableCell>
                 <TableCell>{diagnostico.diagnostico}</TableCell>
                 <TableCell>{new Date(diagnostico.dataDiagnostico).toLocaleDateString()}</TableCell>
                 <TableCell>
                   <Link to={`/diagnosticos/create/${diagnostico.id}`} style={{ textDecoration: 'none' }}>
-                    <Button variant="outlined" color="warning">
+                    <Button variant="outlined" color="warning" style={{ marginRight: '8px' }}>
                       Editar
                     </Button>
                   </Link>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => handleDelete(diagnostico.id)}
+                  >
+                    Excluir
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
