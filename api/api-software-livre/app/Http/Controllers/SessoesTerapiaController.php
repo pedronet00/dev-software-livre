@@ -71,8 +71,14 @@ class SessoesTerapiaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $sessao = SessaoTerapia::findOrFail($id);
+
+        $sessao->delete();
+
+        return response()->json([
+            'message' => "Excluído com sucesso!"
+        ]);
     }
 }

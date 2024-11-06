@@ -39,5 +39,16 @@ class DiagnosticoController extends Controller
 
         return redirect()->back()->with('success', 'Diagnóstico atualizado com sucesso.');
     }
+
+    public function destroy($id)
+    {
+        $diagnostico = Diagnostico::findOrFail($id);
+
+        $diagnostico->delete();
+
+        return response()->json([
+            'message' => "Excluído com sucesso!"
+        ]);
+    }
 }
 

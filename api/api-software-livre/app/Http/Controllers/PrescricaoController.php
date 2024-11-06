@@ -40,5 +40,16 @@ class PrescricaoController extends Controller
 
         return $prescricao;
     }
+
+    public function destroy($id)
+    {
+        $prescricao = Prescricao::findOrFail($id);
+
+        $prescricao->delete();
+
+        return response()->json([
+            'message' => "Excluído com sucesso!"
+        ]);
+    }
 }
 

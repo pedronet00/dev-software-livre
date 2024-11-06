@@ -41,5 +41,16 @@ class EncaminhamentoController extends Controller
         Encaminhamento::create($request->all());
         return redirect()->back()->with('success', 'Encaminhamento registrado com sucesso.');
     }
+
+    public function destroy($id)
+    {
+        $encaminhamento = Encaminhamento::findOrFail($id);
+
+        $encaminhamento->delete();
+
+        return response()->json([
+            'message' => "Excluído com sucesso!"
+        ]);
+    }
 }
 

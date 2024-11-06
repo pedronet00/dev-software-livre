@@ -51,5 +51,16 @@ class PlanoTratamentoController extends Controller
 
         return redirect()->back()->with('success', 'Plano de tratamento atualizado com sucesso.');
     }
+
+    public function destroy($id)
+    {
+        $plano = PlanoTratamento::findOrFail($id);
+
+        $plano->delete();
+
+        return response()->json([
+            'message' => "Excluído com sucesso!"
+        ]);
+    }
 }
 

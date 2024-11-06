@@ -39,5 +39,16 @@ class AgendamentoController extends Controller
         Agendamento::create($request->all());
         return redirect()->back()->with('success', 'Agendamento criado com sucesso.');
     }
+
+    public function destroy($id)
+    {
+        $agendamento = Agendamento::findOrFail($id);
+
+        $agendamento->delete();
+
+        return response()->json([
+            'message' => "Excluído com sucesso!"
+        ]);
+    }
 }
 

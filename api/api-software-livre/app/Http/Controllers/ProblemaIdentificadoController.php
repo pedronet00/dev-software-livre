@@ -39,5 +39,16 @@ class ProblemaIdentificadoController extends Controller
 
         return redirect()->back()->with('success', 'Problema atualizado com sucesso.');
     }
+
+    public function destroy($id)
+    {
+        $problema = ProblemaIdentificado::findOrFail($id);
+
+        $problema->delete();
+
+        return response()->json([
+            'message' => "Excluído com sucesso!"
+        ]);
+    }
 }
 
