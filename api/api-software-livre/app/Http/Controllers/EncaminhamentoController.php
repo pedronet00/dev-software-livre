@@ -13,6 +13,22 @@ class EncaminhamentoController extends Controller
         return $encaminhamentos;
     }
 
+    public function show($id)
+    {
+        $encaminhamento = Encaminhamento::find($id);
+
+        return $encaminhamento;
+    }
+
+    public function update(Request $request, $id)
+    {
+        $encaminhamento = Encaminhamento::find($id);
+
+        $encaminhamento->update($request->all());
+
+        return $encaminhamento;
+    }
+
     public function store(Request $request)
     {
         $request->validate([

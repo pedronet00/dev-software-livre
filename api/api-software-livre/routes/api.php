@@ -46,25 +46,33 @@ Route::get('/plano-tratamento/{id}', [PlanoTratamentoController::class, 'show'])
 
 //* DIAGNÓSTICOS
 Route::get('/diagnosticos', [DiagnosticoController::class, 'index']);
+Route::get('/diagnosticos/{id}', [DiagnosticoController::class, 'show']);
 Route::post('/diagnostico', [DiagnosticoController::class, 'store']);
 Route::put('/diagnostico/{id}', [DiagnosticoController::class, 'update']);
 
 //* PROBLEMAS IDENTIFICADOS
 Route::get('/problemas-identificados', [ProblemaIdentificadoController::class, 'index']);
+Route::get('/problemas-identificados/{id}', [ProblemaIdentificadoController::class, 'show']);
 Route::post('/problema-identificado', [ProblemaIdentificadoController::class, 'store']);
 Route::put('/problema-identificado/{id}', [ProblemaIdentificadoController::class, 'update']);
 
 //* PRESCRIÇÕES
 Route::get('/prescricoes', [PrescricaoController::class, 'index']);
+Route::get('/prescricoes/{id}', [PrescricaoController::class, 'show']);
 Route::post('/prescricao', [PrescricaoController::class, 'store']);
+Route::put('/prescricao/{id}', [PrescricaoController::class, 'update']);
 
 //* ENCAMINHAMENTOS
 Route::get('/encaminhamentos', [EncaminhamentoController::class, 'index']);
 Route::post('/encaminhamento', [EncaminhamentoController::class, 'store']);
+Route::get('/encaminhamento/{id}', [EncaminhamentoController::class, 'show']);
+Route::put('/encaminhamento/{id}', [EncaminhamentoController::class, 'update']);
 
 //* AGENDAMENTOS
 Route::get('/agendamentos', [AgendamentoController::class, 'index']);
 Route::post('/agendamento', [AgendamentoController::class, 'store']);
+Route::get('/agendamento/{id}', [AgendamentoController::class, 'show']);
+Route::put('/agendamento/{id}', [AgendamentoController::class, 'update']);
 
 
 //* AGENDAMENTOS

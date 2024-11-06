@@ -25,6 +25,13 @@ class ProblemaIdentificadoController extends Controller
         return redirect()->back()->with('success', 'Problema registrado com sucesso.');
     }
 
+    public function show($id)
+    {
+        $problema = ProblemaIdentificado::find($id);
+
+        return $problema;
+    }
+
     public function update(Request $request, $id)
     {
         $problema = ProblemaIdentificado::findOrFail($id);

@@ -13,6 +13,21 @@ class AgendamentoController extends Controller
         return $agendamentos;
     }
 
+    public function show($id){
+        $agendamento = Agendamento::find($id);
+
+        return $agendamento;
+    }
+
+    public function update(Request $request, $id)
+    {
+        $agendamento = Agendamento::findOrFail($id);
+
+        $agendamento->update($request->all());
+
+        return $agendamento;
+    }
+
     public function store(Request $request)
     {
         $request->validate([

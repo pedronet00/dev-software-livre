@@ -24,5 +24,21 @@ class PrescricaoController extends Controller
         Prescricao::create($request->all());
         return redirect()->back()->with('success', 'Prescrição registrada com sucesso.');
     }
+
+    public function update(Request $request, $id)
+    {
+        $prescricao = Prescricao::findOrFail($id);
+
+        $prescricao->update($request->all());
+
+        return $prescricao;
+    }
+
+    public function show($id)
+    {
+        $prescricao = Prescricao::find($id);
+
+        return $prescricao;
+    }
 }
 

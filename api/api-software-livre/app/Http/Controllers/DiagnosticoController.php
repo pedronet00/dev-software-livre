@@ -25,6 +25,13 @@ class DiagnosticoController extends Controller
         return redirect()->back()->with('success', 'Diagnóstico registrado com sucesso.');
     }
 
+    public function show($id)
+    {
+        $diagnostico = Diagnostico::find($id);
+
+        return $diagnostico;
+    }
+
     public function update(Request $request, $id)
     {
         $diagnostico = Diagnostico::findOrFail($id);

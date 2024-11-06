@@ -9,7 +9,7 @@ class SessoesTerapia extends Model
 {
     use HasFactory;
 
-    protected $table = 'sessoes_terapias';
+    protected $table = 'sessoes_terapia';
 
     protected $fillable = [
         "pacienteId",
