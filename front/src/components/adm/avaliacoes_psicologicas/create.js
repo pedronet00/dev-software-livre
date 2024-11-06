@@ -10,32 +10,51 @@ import {
   InputLabel,
   FormControl,
 } from '@mui/material';
-import api from '../../api/api'; // Assumindo que o api.js está na pasta api
+import { useParams } from 'react-router-dom';
+import api from '../../api/api';
 
 const CadastroAvaliacao = () => {
+  const { id } = useParams();
   const idUser = localStorage.getItem('idUser');
   const [avaliacao, setAvaliacao] = useState({
-    pacienteId: '',
+    pacienteId: '', // Valor padrão
     dataAvaliacao: '',
     observacoes: '',
-    userId: idUser, // Assumindo que você está usando um ID de usuário fixo. Isso pode ser dinâmico conforme sua aplicação.
+    userId: idUser,
   });
-
-  const [pacientes, setPacientes] = useState([]); // Estado para armazenar a lista de pacientes
+  const [pacientes, setPacientes] = useState([]);
 
   useEffect(() => {
-    // Faz a requisição para o endpoint /pacientes
     const fetchPacientes = async () => {
       try {
         const response = await api.get(`/pacientes?idUser=${idUser}`);
-        setPacientes(response.data); // Atualiza o estado com a lista de pacientes
+        setPacientes(response.data);
       } catch (error) {
         console.error('Erro ao buscar pacientes:', error);
       }
     };
 
     fetchPacientes();
-  }, []);
+
+    if (id) {
+      const fetchAvaliacao = async () => {
+        try {
+          const response = await api.get(`/avaliacoes?idUser=${id}`);
+          if (response.data) {
+            setAvaliacao({
+              pacienteId: response.data.pacienteId || '', // Valor padrão
+              dataAvaliacao: response.data.dataAvaliacao,
+              observacoes: response.data.observacoes,
+              userId: idUser,
+            });
+          }
+        } catch (error) {
+          console.error('Erro ao buscar avaliação:', error);
+        }
+      };
+      fetchAvaliacao();
+    }
+  }, [id, idUser]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,32 +64,32 @@ const CadastroAvaliacao = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Envia os dados da avaliação para a API
-      const response = await api.post('/avaliacoes', avaliacao);
-      console.log(response.data);
-      alert('Avaliação cadastrada com sucesso!');
-      
-      // Limpa os campos após o envio
-      setAvaliacao({
-        pacienteId: '',
-        dataAvaliacao: '',
-        observacoes: '',
-        userId: idUser,
-      });
+      if (id) {
+        await api.put(`/avaliacoes/${id}`, avaliacao);
+        alert('Avaliação atualizada com sucesso!');
+      } else {
+        await api.post('/avaliacoes', avaliacao);
+        alert('Avaliação cadastrada com sucesso!');
+        setAvaliacao({
+          pacienteId: '',
+          dataAvaliacao: '',
+          observacoes: '',
+          userId: idUser,
+        });
+      }
     } catch (error) {
-      console.error('Erro ao cadastrar avaliação:', error);
-      alert('Erro ao cadastrar avaliação. Tente novamente.');
+      console.error('Erro ao salvar avaliação:', error);
+      alert('Erro ao salvar avaliação. Tente novamente.');
     }
   };
 
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" component="h2" gutterBottom className="mt-5">
-        Cadastro de Avaliação
+        {id ? 'Editar Avaliação' : 'Cadastro de Avaliação'}
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
-          {/* Select de Pacientes */}
           <Grid item xs={12}>
             <FormControl fullWidth>
               <InputLabel id="paciente-label">Selecione o Paciente</InputLabel>
@@ -78,7 +97,7 @@ const CadastroAvaliacao = () => {
                 labelId="paciente-label"
                 id="paciente"
                 name="pacienteId"
-                value={avaliacao.pacienteId}
+                value={avaliacao.pacienteId || ''} // Controlado com valor padrão
                 onChange={handleChange}
                 required
                 label="Selecione o Paciente"
@@ -86,7 +105,6 @@ const CadastroAvaliacao = () => {
                 <MenuItem value="">
                   <em>Selecione um paciente</em>
                 </MenuItem>
-                {/* Populando o select com os pacientes vindos da API */}
                 {pacientes.map((paciente) => (
                   <MenuItem key={paciente.id} value={paciente.id}>
                     {paciente.nomePaciente}
@@ -95,8 +113,6 @@ const CadastroAvaliacao = () => {
               </Select>
             </FormControl>
           </Grid>
-
-          {/* Data da Avaliação */}
           <Grid item xs={12}>
             <TextField
               label="Data da Avaliação"
@@ -112,8 +128,6 @@ const CadastroAvaliacao = () => {
               required
             />
           </Grid>
-
-          {/* Observações */}
           <Grid item xs={12}>
             <TextField
               label="Observações"
@@ -127,10 +141,9 @@ const CadastroAvaliacao = () => {
               placeholder="Digite as observações sobre a avaliação"
             />
           </Grid>
-
           <Grid item xs={12}>
             <Button variant="contained" color="primary" type="submit" fullWidth>
-              Cadastrar Avaliação
+              {id ? 'Atualizar Avaliação' : 'Cadastrar Avaliação'}
             </Button>
           </Grid>
         </Grid>

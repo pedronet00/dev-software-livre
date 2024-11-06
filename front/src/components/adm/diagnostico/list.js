@@ -42,7 +42,7 @@ function ListandoDiagnosticos() {
                 <TableCell>{diagnostico.diagnostico}</TableCell>
                 <TableCell>{new Date(diagnostico.dataDiagnostico).toLocaleDateString()}</TableCell>
                 <TableCell>
-                  <Link to={`/diagnosticos/${diagnostico.id}`} style={{ textDecoration: 'none' }}>
+                  <Link to={`/diagnosticos/create/${diagnostico.id}`} style={{ textDecoration: 'none' }}>
                     <Button variant="outlined" color="warning">
                       Editar
                     </Button>

@@ -30,7 +30,7 @@ function DiagnosticoForm() {
     fetchPacientes();
 
     if (id) {
-      api.get(`/diagnostico/${id}`)
+      api.get(`/diagnosticos/${id}`)
         .then((response) => {
           setFormData(response.data);
         });

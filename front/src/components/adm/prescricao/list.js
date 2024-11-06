@@ -52,7 +52,7 @@ function ListandoPrescricoes() {
                 <TableCell>{prescricao.descricao}</TableCell>
                 <TableCell>{new Date(prescricao.data).toLocaleDateString()}</TableCell>
                 <TableCell>
-                  <Link to={`/prescricoes/${prescricao.id}`} style={{ textDecoration: 'none' }}>
+                  <Link to={`/prescricoes/create/${prescricao.id}`} style={{ textDecoration: 'none' }}>
                     <Button variant="outlined" color="warning">
                       Editar
                     </Button>

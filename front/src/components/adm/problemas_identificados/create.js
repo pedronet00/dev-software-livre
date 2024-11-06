@@ -30,7 +30,7 @@ function ProblemaIdentificadoForm() {
     fetchPacientes();
 
     if (id) {
-      api.get(`/problema-identificado/${id}`)
+      api.get(`/problemas-identificados/${id}`)
         .then((response) => {
           setFormData(response.data);
         });

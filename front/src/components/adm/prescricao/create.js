@@ -35,7 +35,7 @@ function PrescricaoForm() {
 
   useEffect(() => {
     if (id) {
-      api.get(`/prescricao/${id}`)
+      api.get(`/prescricoes/${id}`)
         .then((response) => {
           setFormData(response.data);
         });

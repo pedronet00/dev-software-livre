@@ -58,7 +58,7 @@ function ListandoEncaminhamentos() {
               <TableCell>
                 <Button 
                   component={Link} 
-                  to={`/encaminhamentos/${encaminhamento.id}`} 
+                  to={`/encaminhamentos/create/${encaminhamento.id}`} 
                   variant="outlined" 
                   color="warning"
                   size="small"

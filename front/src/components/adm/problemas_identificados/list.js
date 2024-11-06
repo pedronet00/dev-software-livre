@@ -53,7 +53,7 @@ function ListandoProblemasIdentificados() {
                 <TableCell>{problema.problema}</TableCell>
                 <TableCell>{new Date(problema.dataIdentificacao).toLocaleDateString()}</TableCell>
                 <TableCell>
-                  <Link to={`/problemas-identificados/${problema.id}`} style={{ textDecoration: 'none' }}>
+                  <Link to={`/problemas-identificados/create/${problema.id}`} style={{ textDecoration: 'none' }}>
                     <Button variant="outlined" color="warning">
                       Editar
                     </Button>
